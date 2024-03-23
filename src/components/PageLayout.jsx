@@ -18,24 +18,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import ApplePage from "../pages/ApplePage";
-import { Container, Grid } from "@mui/material";
-
-{
-  /* <div>
-            <Link to="/" className="link">
-              Home
-            </Link>
-            <Link to="/apple" className="link">
-              Apple
-            </Link>
-            <Link to="/applet" className="link">
-              Applet
-            </Link>
-            <Link to="/test" className="link">
-              Test
-            </Link>
-          </div> */
-}
+import { Container, Grid, Paper } from "@mui/material";
+import AppRoutes from "../route";
 
 // import Link
 import { Link } from "react-router-dom";
@@ -59,11 +43,10 @@ function Copyright(props) {
 }
 
 const drawerWidth = 240;
-
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
+  zIndex: open ? theme.zIndex.drawer + 1 : theme.zIndex.drawer,
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -186,19 +169,7 @@ export default function PageLayout() {
             }}
           >
             <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/404" element={<NotFoundPage />} />
-                    <Route path="/apple" element={<ApplePage />} />
-                    <Route path="*" element={<Navigate replace to="/404" />} />
-                  </Routes>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ pt: 4 }} />
-            </Container>
+            <AppRoutes />
           </Box>
         </Box>
       </BrowserRouter>

@@ -1,6 +1,6 @@
 import React from "react";
 // Import AppRoutes
-// import AppRoutes from "./route"; // Ensure the path to route.js is correct
+import AppRoutes from "./route"; // Ensure the path to route.js is correct
 import PageLayout from "./components/PageLayout";
 
 function App() {
@@ -8,6 +8,8 @@ function App() {
     <div>
       {/* Use AppRoutes for routing */}
       {/* <AppRoutes />s */}
+      {/* <AppRoutes /> */}
+
       <PageLayout />
     </div>
   );
