@@ -1,6 +1,6 @@
 import React from "react";
 
-import PageLayout from "./Layout/PageLayout";
+import PageLayout from "./layout/PageLayout";
 
 function App() {
   return (

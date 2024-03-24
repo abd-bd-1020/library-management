@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,6 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from '@mui/icons-material/Login';
 
 const drawerWidth = 240;
 
@@ -29,6 +31,20 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const TopBar = ({ open, toggleDrawer }) => {
+  const [currentUserData, setCurrentUserData] = useState(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem("currentUserData");
+    if (userData) {
+      setCurrentUserData(JSON.parse(userData));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("currentUserData");
+    setCurrentUserData(null);
+  };
+
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar
@@ -57,11 +73,21 @@ const TopBar = ({ open, toggleDrawer }) => {
         >
           Dashboard
         </Typography>
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
+        {currentUserData ? (
+          <IconButton color="inherit" onClick={handleLogout}>
+            <LogoutIcon />
+          </IconButton>
+        ) : (
+          <IconButton color="inherit" 
+          onClick={() => {
+            window.location.href = "/login";
+          }}
+          
+          >
+            <LoginIcon />
+          </IconButton>
+        )}
+   
       </Toolbar>
     </AppBar>
   );
