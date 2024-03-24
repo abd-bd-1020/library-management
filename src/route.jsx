@@ -8,6 +8,8 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/homePage" element={<HomePage />} />
+
       <Route path="/404" element={<NotFoundPage />} />
       <Route path="/apple" element={<ApplePage />} />
       <Route path="*" element={<Navigate replace to="/404" />} />
