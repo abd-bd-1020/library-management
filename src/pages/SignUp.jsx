@@ -10,7 +10,7 @@ import {
 
 const SignupPage = () => {
   return (
-    <Container component="main" maxWidth="xs">
+    <Container style={{ marginTop: "20vh" }} component="main" maxWidth="xs">
       <div
         style={{
           marginTop: 8,

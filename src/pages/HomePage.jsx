@@ -82,7 +82,7 @@ function HomePage() {
               <Grid container spacing={3}>
                 <>
                   {booksData.map((book) => (
-                    <Grid item xs={12} md={6} lg={3}>
+                    <Grid item xs={12} md={6} lg={3} key={book._id}>
                       <Book
                         key={book._id}
                         book={book}
@@ -103,7 +103,6 @@ function HomePage() {
           </Paper>
         </Grid>
       </Grid>
-      {/* <Copyright sx={{ pt: 4 }} /> */}
     </Container>
   );
 }
