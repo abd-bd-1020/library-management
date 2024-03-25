@@ -1,80 +1,120 @@
-import React, { useState } from "react";
-import { TextField, Button, Grid, MenuItem } from "@mui/material";
-import { ClientEnum } from "../ClientEnum";
+import React, { useState, useEffect } from 'react';
+import {
+  TextField,
+  MenuItem,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  Typography,
+  Container,
+  Grid,
+} from '@mui/material';
 
-function BookEditor({ onSave, onCancel, book }) {
-  const [title, setTitle] = useState(book ? book.title : "");
-  const [authors, setAuthors] = useState(book ? book.authors.join(", ") : "");
-  const [genre, setGenre] = useState(book ? book.genre : ClientEnum.ALL_GENRE);
-  const [rating, setRating] = useState(book ? book.rating : "");
+import { ClientEnum } from '../ClientEnum';
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const updatedBook = {
-      title,
-      authors: authors.split(",").map((author) => author.trim()),
-      genre,
-      rating: parseInt(rating),
-    };
-    onSave(updatedBook);
+const initialValues = {
+  title: '',
+  authors: '',
+  rating: '',
+  genre: '',
+};
+
+const BookEditor = ({ book }) => {
+  const [values, setValues] = useState(initialValues);
+
+  useEffect(() => {
+    if (book) {
+      setValues(book);
+    }
+  }, [book]);
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setValues({ ...values, [name]: value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Form submitted:', values);
+    setValues(initialValues);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Grid container spacing={2} justifyContent="center">
-        <Grid item xs={12}>
-          <TextField
-            label="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            fullWidth
-          />
+    <Container>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+        style={{ minHeight: '100vh' }}
+      >
+        <Grid item>
+          <Typography variant="h5" gutterBottom>
+            {book ? 'Update Book' : 'Add New Book'}
+          </Typography>
         </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Authors (comma-separated)"
-            value={authors}
-            onChange={(e) => setAuthors(e.target.value)}
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            select
-            label="Genre"
-            value={genre}
-            onChange={(e) => setGenre(e.target.value)}
-            fullWidth
-          >
-            {ClientEnum.BOOK_GENRES.map((genre) => (
-              <MenuItem key={genre} value={genre}>
-                {genre}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            label="Rating"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-            type="number"
-            fullWidth
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <Button type="submit" variant="contained" color="primary">
-            {book ? "Update" : "Add"} Book
-          </Button>
-        </Grid>
-        <Grid item xs={6}>
-          <Button onClick={onCancel} variant="contained" color="secondary">
-            Cancel
-          </Button>
+        <Grid item>
+          <form onSubmit={handleSubmit}>
+            <Grid container direction="column" spacing={2}>
+              <Grid item>
+                <TextField
+                  label="Title"
+                  name="title"
+                  value={values.title}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  label="Authors (comma-separated)"
+                  name="authors"
+                  value={values.authors}
+                  onChange={handleChange}
+                  required
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  label="Rating"
+                  name="rating"
+                  type="number"
+                  inputProps={{ min: 0, max: 10 }}
+                  value={values.rating}
+                  onChange={handleChange}
+                  required
+                  sx={{ width: '100%' }}
+                />
+              </Grid>
+              <Grid item>
+                <FormControl required style={{ width: '100%' }}>
+                  <InputLabel>Genre</InputLabel>
+                  <Select
+                    name="genre"
+                    value={values.genre}
+                    onChange={handleChange}
+                  >
+                    {ClientEnum.BOOK_GENRES.map((genre) => (
+                      <MenuItem key={genre} value={genre}>
+                        {genre}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" color="primary" type="submit">
+                  {book ? 'Update' : 'Submit'}
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
         </Grid>
       </Grid>
-    </form>
+    </Container>
   );
-}
+};
 
 export default BookEditor;

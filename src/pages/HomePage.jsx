@@ -1,9 +1,23 @@
 import React, { useEffect, useState } from "react";
 import BookDetailsModal from "../components/BookDetailsModal";
 import Book from "../components/Book";
-import { Container, Grid, Paper, TextField, MenuItem } from "@mui/material";
+import {
+  Container,
+  Grid,
+  Paper,
+  TextField,
+  MenuItem,
+  Box,
+} from "@mui/material";
 import { ClientEnum } from "../ClientEnum";
 import { CleanHands } from "@mui/icons-material";
+
+const StyledBox = {
+  p: 1,
+  display: "flex",
+  flexDirection: "column",
+  height: 88,
+};
 
 function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,87 +63,63 @@ function HomePage() {
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={12} lg={12}>
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 60,
-                  }}
-                >
-                  <TextField
-                    label="Search by Name"
-                    value={searchByName}
-                    onChange={(e) => setSearchByName(e.target.value)}
-                  />
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={6} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 60,
-                  }}
-                >
-                  <TextField
-                    label="Search by Author"
-                    value={searchByAuthor}
-                    onChange={(e) => setSearchByAuthor(e.target.value)}
-                  />
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={6} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 60,
-                  }}
-                >
-                  <TextField
-                    select
-                    label="Select Genre"
-                    value={selectedGenre}
-                    onChange={(event) => setSelectedGenre(event.target.value)}
-                  >
-                          <MenuItem value={ClientEnum.ALL_GENRE}>{ClientEnum.ALL_GENRE}</MenuItem>
-
-                    {ClientEnum.BOOK_GENRES.map((genre) => (
-                      <MenuItem key={genre} value={genre}>
-                        {genre}
+          <Paper sx={{ mt: 12 }}>
+            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6} lg={3}>
+                  <Box sx={StyledBox}>
+                    <TextField
+                      label="Search by Name"
+                      value={searchByName}
+                      onChange={(e) => setSearchByName(e.target.value)}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                  <Box sx={StyledBox}>
+                    <TextField
+                      label="Search by Author"
+                      value={searchByAuthor}
+                      onChange={(e) => setSearchByAuthor(e.target.value)}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                  <Box sx={StyledBox}>
+                    <TextField
+                      select
+                      label="Select Genre"
+                      value={selectedGenre}
+                      onChange={(event) => setSelectedGenre(event.target.value)}
+                    >
+                      <MenuItem value={ClientEnum.ALL_GENRE}>
+                        {ClientEnum.ALL_GENRE}
                       </MenuItem>
-                    ))}
-                  </TextField>
-                </Paper>
+
+                      {ClientEnum.BOOK_GENRES.map((genre) => (
+                        <MenuItem key={genre} value={genre}>
+                          {genre}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                  <Box sx={StyledBox}>
+                    <TextField
+                      select
+                      label="Sort by Rating"
+                      value={sortByRating}
+                      onChange={(e) => setSortByRating(e.target.value)}
+                    >
+                      <MenuItem value="asc">Ascending</MenuItem>
+                      <MenuItem value="desc">Descending</MenuItem>
+                    </TextField>
+                  </Box>
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={6} lg={3}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    height: 60,
-                  }}
-                >
-                  <TextField
-                    select
-                    label="Sort by Rating"
-                    value={sortByRating}
-                    onChange={(e) => setSortByRating(e.target.value)}
-                  >
-                    <MenuItem value="asc">Ascending</MenuItem>
-                    <MenuItem value="desc">Descending</MenuItem>
-                  </TextField>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Container>
+            </Container>
+          </Paper>
         </Grid>
         <Grid item xs={12}>
           <Paper

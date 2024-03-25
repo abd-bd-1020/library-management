@@ -55,13 +55,15 @@ const SignupPage = () => {
   };
 
   return (
-    <Container style={{ marginTop: "20vh" }} component="main" maxWidth="xs">
+    <Container  component="main" maxWidth="xs">
       <div
         style={{
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          height : "100vh",
+          justifyContent : "center"
         }}
       >
         <Typography component="h1" variant="h5">
