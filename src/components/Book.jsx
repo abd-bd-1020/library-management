@@ -72,7 +72,7 @@ function Book({ book, onOpenModal }) {
           Author: {book.authors.join(", ")}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={StyledPrice}>
-          Price: ${book.price} | Rating: {book.rating}
+          Genre: {book.genre} | Rating: {book.rating}
         </Typography>
         <Box
           className="buttons"
