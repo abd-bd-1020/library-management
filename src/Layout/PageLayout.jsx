@@ -14,22 +14,9 @@ import AppRoutes from "../route";
 const defaultTheme = createTheme();
 
 export default function PageLayout() {
-  const [showSideBar, setShowSideBar] = useState(true);
   const [open, setOpen] = useState(true);
 
-  useLayoutEffect(() => {
-    if (
-      window.location.pathname === "/login" ||
-      window.location.pathname === "/signup"
-    ) {
-      
-      setShowSideBar(false);
-    }
-    else{
-      setShowSideBar(true);
 
-    }
-  }, [location.pathname]);
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -40,12 +27,10 @@ export default function PageLayout() {
       <BrowserRouter>
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
-          {showSideBar ? (
-            <React.Fragment>
+       
+            
               <TopBar open={open} toggleDrawer={toggleDrawer} />
               <Sidebar open={open} toggleDrawer={toggleDrawer} />
-            </React.Fragment>
-          ) : <React.Fragment></React.Fragment>}
           <Box
             component="main"
             sx={{
