@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import booksData from "./data/books.json";
 
-import PageLayout from "./layout/PageLayout";
+import PageLayout from "./Layout/PageLayout";
 
 function App() {
 
