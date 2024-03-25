@@ -45,7 +45,9 @@ export default function PageLayout() {
               <TopBar open={open} toggleDrawer={toggleDrawer} />
               <Sidebar open={open} toggleDrawer={toggleDrawer} />
             </>
-          ) : <div></div>}
+          ) : <div>
+            <p>asd</p>
+            </div>}
           <Box
             component="main"
             sx={{
