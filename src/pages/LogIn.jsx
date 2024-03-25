@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import DefaultService from "../services/DefaultService";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const LoginPage = () => {
   const navigate = useNavigate();

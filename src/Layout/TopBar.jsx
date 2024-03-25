@@ -4,12 +4,10 @@ import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from '@mui/icons-material/Login';
-
+import { useNavigate } from "react-router-dom";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -31,6 +29,9 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const TopBar = ({ open, toggleDrawer }) => {
+
+  const navigate = useNavigate();
+
   const [currentUserData, setCurrentUserData] = useState(null);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const TopBar = ({ open, toggleDrawer }) => {
     localStorage.removeItem("currentUserData");
     setCurrentUserData(null);
   };
-
+console.log(currentUserData)
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar
@@ -73,14 +74,14 @@ const TopBar = ({ open, toggleDrawer }) => {
         >
           Dashboard
         </Typography>
-        {currentUserData ? (
+        {currentUserData !== null ? (
           <IconButton color="inherit" onClick={handleLogout}>
             <LogoutIcon />
           </IconButton>
         ) : (
           <IconButton color="inherit" 
           onClick={() => {
-            window.location.href = "/login";
+            navigate( "/login")
           }}
           
           >
