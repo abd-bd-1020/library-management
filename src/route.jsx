@@ -9,37 +9,7 @@ import Sidebar from "./Layout/SideBar";
 import TopBar from "./Layout/TopBar";
 import { Box, CssBaseline, Toolbar } from "@mui/material";
 import BookEditor from "./components/BookEditor";
-
-function Navbar({ showBar = true, children }) {
-  const [open, setOpen] = useState(true);
-
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
-
-  return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      {showBar && <TopBar open={open} toggleDrawer={toggleDrawer} />}
-      {showBar && <Sidebar open={open} toggleDrawer={toggleDrawer} />}
-      <Box
-        component="main"
-        sx={{
-          backgroundColor: (theme) =>
-            theme.palette.mode === "light"
-              ? theme.palette.grey[100]
-              : theme.palette.grey[900],
-          flexGrow: 1,
-          height: "100vh",
-          overflow: "auto",
-        }}
-      >
-        {children}
-        {showBar && <Toolbar />}
-      </Box>
-    </Box>
-  );
-}
+import PageLayout from "./Layout/PageLayout";
 
 const AppRoutes = () => {
   return (
@@ -47,57 +17,57 @@ const AppRoutes = () => {
       <Route
         path="/"
         element={
-          <div>
+          <PageLayout>
             <HomePage />
-          </div>
+          </PageLayout>
         }
       />
       <Route
         path="/homePage"
         element={
-          <Navbar>
+          <PageLayout>
             <HomePage />
-          </Navbar>
+          </PageLayout>
         }
       />
       <Route
         path="/login"
         element={
-          <Navbar showBar={false}>
+          <PageLayout showBar={false}>
             <LoginPage />
-          </Navbar>
+          </PageLayout>
         }
       />
       <Route
         path="/signup"
         element={
-          <Navbar showBar={false}>
+          <PageLayout showBar={false}>
             <SignupPage />
-          </Navbar>
+          </PageLayout>
         }
       />
       <Route
         path="/404"
         element={
-          <Navbar>
+          <PageLayout>
             <HomePage />
-          </Navbar>
+          </PageLayout>
         }
       />
       <Route
         path="/apple"
         element={
-          <Navbar>
+          <PageLayout>
             <ApplePage />
-          </Navbar>
+          </PageLayout>
         }
       />
       <Route
         path="/bookeditor"
         element={
-          <Navbar>
+          <PageLayout>
             <BookEditor />
-          </Navbar>
+          </PageLayout>
         }
       />
       <Route path="*" element={<Navigate replace to="/404" />} />

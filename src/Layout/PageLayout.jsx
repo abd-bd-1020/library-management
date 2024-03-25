@@ -1,18 +1,36 @@
-import React, { useState, useLayoutEffect } from "react";
+import { Box, CssBaseline, Toolbar } from "@mui/material";
+import TopBar from "./TopBar";
+import Sidebar from "./SideBar";
+import { useState } from "react";
 
-import { BrowserRouter, useLocation, useNavigate } from "react-router-dom";
+function PageLayout({ showBar = true, children }) {
+  const [open, setOpen] = useState(true);
 
-import AppRoutes from "../route";
-import { ThemeProvider, createTheme } from "@mui/material";
+  const toggleDrawer = () => {
+    setOpen(!open);
+  };
 
-const defaultTheme = createTheme();
-
-export default function PageLayout() {
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </ThemeProvider>
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      {showBar && <TopBar open={open} toggleDrawer={toggleDrawer} />}
+      {showBar && <Sidebar open={open} toggleDrawer={toggleDrawer} />}
+      <Box
+        component="main"
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: "100vh",
+          overflow: "auto",
+        }}
+      >
+        {children}
+        {showBar && <Toolbar />}
+      </Box>
+    </Box>
   );
 }
+export default PageLayout;

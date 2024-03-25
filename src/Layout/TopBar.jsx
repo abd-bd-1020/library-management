@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
-import LoginIcon from '@mui/icons-material/Login';
+import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 const drawerWidth = 240;
 
@@ -29,7 +29,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const TopBar = ({ open, toggleDrawer }) => {
-
   const navigate = useNavigate();
 
   const [currentUserData, setCurrentUserData] = useState(null);
@@ -45,7 +44,6 @@ const TopBar = ({ open, toggleDrawer }) => {
     localStorage.removeItem("currentUserData");
     setCurrentUserData(null);
   };
-console.log(currentUserData)
   return (
     <AppBar position="absolute" open={open}>
       <Toolbar
@@ -79,16 +77,15 @@ console.log(currentUserData)
             <LogoutIcon />
           </IconButton>
         ) : (
-          <IconButton color="inherit" 
-          onClick={() => {
-            navigate("/login")
-          }}
-          
+          <IconButton
+            color="inherit"
+            onClick={() => {
+              navigate("/login");
+            }}
           >
             <LoginIcon />
           </IconButton>
         )}
-   
       </Toolbar>
     </AppBar>
   );
