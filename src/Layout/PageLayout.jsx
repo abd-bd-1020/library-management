@@ -22,9 +22,14 @@ export default function PageLayout() {
       window.location.pathname === "/login" ||
       window.location.pathname === "/signup"
     ) {
+      
       setShowSideBar(false);
     }
-  }, [window.location.pathname]);
+    else{
+      setShowSideBar(true);
+
+    }
+  }, [location.pathname]);
 
   const toggleDrawer = () => {
     setOpen(!open);

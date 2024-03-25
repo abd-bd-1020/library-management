@@ -5,6 +5,18 @@ import axios from "axios";
 export default class DefaultService {
   static instance = DefaultService.instance || new DefaultService();
 
+  getUserByEmail(email){
+    const storedUserDataString = localStorage.getItem('userData');
+    const userDataArr =  JSON.parse(storedUserDataString);
+    var userData = null
+    userDataArr.forEach((user) => {
+      if (user.email === email ) {
+          userData = user;
+    }
+    });
+    return userData;
+  }
+
   getHeader() {
     return {
       headers: {
@@ -17,7 +29,6 @@ export default class DefaultService {
   }
   getHeaderWithToken() {
     const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
-    // add bearer token
     const bearerToken = "Bearer " + currentUserData.userJWT;
 
     return {
@@ -42,17 +53,20 @@ export default class DefaultService {
 
     while (retry++ < 2) {
       try {
-        const loginResponse = await axios.post(
-          ServerConfig.url.API_URL + "/user/login",
-          payload,
-          DefaultService.instance.getHeader(),
-        );
-        if (loginResponse.status == "200") {
-          return {
-            status: true,
-            data: loginResponse.data,
-          };
+
+
+        const userData = this.getUserByEmail(payload.email);
+        if(userData){
+          if(userData.password === payload.password){
+              return {
+                status: true,
+                data : {role : userData.role}
+              }
+          }
         }
+
+        
+        
       } catch (error) {
         console.log(error);
         retry++;
@@ -66,18 +80,36 @@ export default class DefaultService {
 
     while (retry++ < 2) {
       try {
-        const loginResponse = await axios.post(
-          ServerConfig.url.API_URL + "/user/signup",
-          payload,
-          DefaultService.instance.getHeader(),
-        );
+        // const loginResponse = await axios.post(
+        //   ServerConfig.url.API_URL + "/user/signup",
+        //   payload,
+        //   DefaultService.instance.getHeader(),
+        // );
 
-        if (loginResponse.status == "200") {
+        // if (loginResponse.status == "200") {
+        //   return {
+        //     status: true,
+        //     data: loginResponse.data,
+        //   };
+        // }
+        if(!this.getUserByEmail(payload.email)){
+          const storedUserDataString = localStorage.getItem('userData');
+          const userDataArr =  JSON.parse(storedUserDataString);
+          userDataArr.push(payload)
+          localStorage.setItem('userData',JSON.stringify(userDataArr))
           return {
-            status: true,
-            data: loginResponse.data,
+                status: true,
+                data: "Success",
+              };
+        }
+        else{
+          return {
+            status: false,
+            data: "User already exists",
           };
         }
+  
+
       } catch (error) {
         console.log(error);
         retry++;

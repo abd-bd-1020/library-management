@@ -8,6 +8,8 @@ import {
   Link,
 } from "@mui/material";
 import DefaultService from "../services/DefaultService";
+import { ClientEnum } from "../ClientEnum";
+import Swal from 'sweetalert2'
 
 const SignupPage = () => {
   const [firstName, setFirstName] = useState("");
@@ -22,15 +24,34 @@ const SignupPage = () => {
       return;
     }
     const payload = {
-      firstName,
-      lastName,
-      email,
-      password
+      firstName : firstName,
+      lastName : lastName,
+      email : email,
+      password : password,
+      role : ClientEnum.USER_TYPE
+
     };
 
     const response = await DefaultService.instance.signup(payload);
-    console.log(response);
+    if (response.status === true) {
+      Swal.fire({
+        title: 'Success',
+        text: 'Sign up successful. Please login', 
+        icon: 'success', 
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = '/login';
+        }
+      });
+    }
+    else{
+      Swal.fire({
+        title: 'Error',
+        text: 'Please try again', 
+        icon: 'error', 
+      })
 
+    }
   };
 
   return (

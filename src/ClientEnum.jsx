@@ -3,6 +3,8 @@ export const ClientEnum = {
     STUDENT_TYPE: "STUDENT",
     TEACHER_TYPE: "TEACHER",
     GUEST_TYPE: "GUEST",
+    USER_TYPE: "USER",
+
     USER_ACTIVE: "ACTIVE",
     USER_INACTIVE: "INACTIVE",
   

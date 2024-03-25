@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Typography,
@@ -7,8 +7,47 @@ import {
   Grid,
   Link,
 } from "@mui/material";
+import DefaultService from "../services/DefaultService";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const  handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    const payload = {
+      email : email,
+      password : password,
+    };
+
+    const response = await DefaultService.instance.login(payload);
+    if(response.status === true){
+      const currentUserData = {
+        email : email,
+        role : response.data.role
+      }
+      console.log(currentUserData)
+      localStorage.setItem('currentUserData',JSON.stringify(currentUserData))
+      window.location.href = "/homePage"
+
+
+    }
+    else{
+      Swal.fire({
+        title: 'Error',
+        text: 'Please try again', 
+        icon: 'error', 
+      })
+    }
+
+  };
+
   return (
     <Container style={{ marginTop: "20vh" }} component="main" maxWidth="xs">
       <div
@@ -22,7 +61,10 @@ const LoginPage = () => {
         <Typography component="h1" variant="h5">
           Sign In
         </Typography>
-        <form style={{ width: "100%", marginTop: 1 }}>
+        <form
+          style={{ width: "100%", marginTop: 1 }}
+          onSubmit={handleSubmit} // Attach handleSubmit to form onSubmit event
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -33,6 +75,8 @@ const LoginPage = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
           />
           <TextField
             variant="outlined"
@@ -44,6 +88,8 @@ const LoginPage = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
           />
           <Button
             type="submit"
