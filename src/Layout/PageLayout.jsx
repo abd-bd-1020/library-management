@@ -41,13 +41,11 @@ export default function PageLayout() {
         <Box sx={{ display: "flex" }}>
           <CssBaseline />
           {showSideBar ? (
-            <>
+            <React.Fragment>
               <TopBar open={open} toggleDrawer={toggleDrawer} />
               <Sidebar open={open} toggleDrawer={toggleDrawer} />
-            </>
-          ) : <div>
-            <p>asd</p>
-            </div>}
+            </React.Fragment>
+          ) : <React.Fragment></React.Fragment>}
           <Box
             component="main"
             sx={{
