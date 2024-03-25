@@ -45,7 +45,7 @@ export default function PageLayout() {
               <TopBar open={open} toggleDrawer={toggleDrawer} />
               <Sidebar open={open} toggleDrawer={toggleDrawer} />
             </>
-          ) : <React.Fragment></React.Fragment>}
+          ) : <div></div>}
           <Box
             component="main"
             sx={{
