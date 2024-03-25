@@ -81,7 +81,7 @@ console.log(currentUserData)
         ) : (
           <IconButton color="inherit" 
           onClick={() => {
-            window.location.href = "/login";
+            navigate( "/login")
           }}
           
           >
