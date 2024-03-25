@@ -8,6 +8,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -72,6 +73,9 @@ const TopBar = ({ open, toggleDrawer }) => {
         >
           Dashboard
         </Typography>
+        <IconButton color="inherit">
+          <ShoppingCartIcon />
+        </IconButton>
         {currentUserData !== null ? (
           <IconButton color="inherit" onClick={handleLogout}>
             <LogoutIcon />
