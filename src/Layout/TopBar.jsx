@@ -48,7 +48,7 @@ const TopBar = ({ open, toggleDrawer }) => {
     setCurrentUserData(null);
   };
   return (
-    <AppBar position="absolute" open={open}>
+    <AppBar className="page-header" position="absolute" open={open}>
       <Toolbar
         sx={{
           pr: "24px",
