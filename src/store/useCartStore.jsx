@@ -1,11 +1,8 @@
-import { createStore } from "zustand";
+import { create } from "zustand";
 
-const useCartStore = createStore((set) => ({
+const useCartStore = create((set) => ({
   isCartOpen: false,
   toggleCart: () => set((state) => ({ isCartOpen: !state.isCartOpen })),
 }));
 
-export const useCart = () => {
-  const { isCartOpen, toggleCart } = useCartStore();
-  return { isCartOpen, toggleCart };
-};
+export default useCartStore;
