@@ -10,7 +10,9 @@ import {
   Box,
 } from "@mui/material";
 import { ClientEnum } from "../ClientEnum";
-import { CleanHands } from "@mui/icons-material";
+import BookService from "../services/BookService";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const StyledBox = {
   p: 1,
@@ -27,10 +29,14 @@ function HomePage() {
   const [searchByAuthor, setSearchByAuthor] = useState("");
   const [selectedGenre, setSelectedGenre] = useState(ClientEnum.ALL_GENRE);
   const [sortByRating, setSortByRating] = useState("");
+  const [currentUserRole, setCurrentUserRole] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedBooksData = localStorage.getItem("bookData");
     setBooksData(JSON.parse(storedBooksData));
+    const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
+    setCurrentUserRole(currentUserData?.role);
   }, []);
 
   const handleOpenModal = (book) => {
@@ -41,6 +47,32 @@ function HomePage() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedBook(null);
+  };
+
+  const handleDelete = async () => {
+    const payload = {
+      id: book._id,
+    };
+    const response = await BookService.instance.deleteBook(payload);
+    if (response.status === true) {
+      const updatedBooksData = booksData.filter(
+        (item) => item._id !== book._id
+      );
+      setBooksData(updatedBooksData);
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "Please try again",
+        icon: "error",
+      });
+    }
+  };
+  const handleUpdate = (book) => {
+    navigate("/bookeditor", {
+      state: {
+        book: book,
+      },
+    });
   };
 
   const filteredBooks = booksData.filter((book) => {
@@ -141,6 +173,9 @@ function HomePage() {
                         key={book._id}
                         book={book}
                         onOpenModal={handleOpenModal}
+                        isAdmin={currentUserRole === ClientEnum.ADMIN_TYPE}
+                        handleDelete={handleDelete}
+                        handleUpdate={handleUpdate}
                       />
                     </Grid>
                   ))}

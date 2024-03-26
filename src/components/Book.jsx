@@ -1,12 +1,6 @@
 import React from "react";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Button,
-  Box,
-} from "@mui/material";
+import { CardMedia, CardContent, Typography, Button, Box } from "@mui/material";
+import RatingStars from "./RatingStars";
 
 const StyledTitle = {
   fontFamily: "Lato, sans-serif, SiyamRupali",
@@ -32,9 +26,9 @@ const StyledPrice = {
   textAlign: "center",
 };
 
-function Book({ book, onOpenModal }) {
+function Book({ book, onOpenModal, isAdmin, handleDelete, handleUpdate }) {
   if (!book) {
-    return null; // or handle the case where book is undefined/null
+    return null;
   }
 
   return (
@@ -72,7 +66,10 @@ function Book({ book, onOpenModal }) {
           Author: {book.authors.join(", ")}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={StyledPrice}>
-          Genre: {book.genre} | Rating: {book.rating}
+          Genre: {book.genre}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={StyledPrice}>
+          <RatingStars rating={book.rating} />
         </Typography>
         <Box
           className="buttons"
@@ -90,13 +87,34 @@ function Book({ book, onOpenModal }) {
             gap: "15px",
           }}
         >
-          <Button variant="contained" size="small">
-            Borrow it
-          </Button>
+          {isAdmin ? (
+            <>
+              <Button
+                variant="contained"
+                size="small"
+                color="error"
+                onClick={() => handleDelete(book)}
+              >
+                Delete
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => handleUpdate(book)}
+              >
+                Update
+              </Button>
+            </>
+          ) : (
+            <Button variant="contained" size="small">
+              Borrow it
+            </Button>
+          )}
           <Button
             onClick={() => onOpenModal(book)}
             variant="contained"
             color="secondary"
+            size="small"
           >
             Details
           </Button>

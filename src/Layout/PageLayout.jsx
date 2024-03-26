@@ -2,6 +2,7 @@ import { Box, CssBaseline, Toolbar } from "@mui/material";
 import TopBar from "./TopBar";
 import Sidebar from "./SideBar";
 import { useState } from "react";
+import Cart from "../components/Cart";
 
 function PageLayout({ showBar = true, children }) {
   const [open, setOpen] = useState(true);
@@ -15,6 +16,8 @@ function PageLayout({ showBar = true, children }) {
       <CssBaseline />
       {showBar && <TopBar open={open} toggleDrawer={toggleDrawer} />}
       {showBar && <Sidebar open={open} toggleDrawer={toggleDrawer} />}
+      {showBar && <Cart cartItems={[]} />}
+
       <Box
         component="main"
         sx={{
