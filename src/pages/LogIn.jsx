@@ -16,49 +16,45 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const  handleSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (!email || !password) {
       alert("Please fill in all fields.");
       return;
     }
     const payload = {
-      email : email,
-      password : password,
+      email: email,
+      password: password,
     };
 
     const response = await DefaultService.instance.login(payload);
-    if(response.status === true){
+    if (response.status === true) {
       const currentUserData = {
-        email : email,
-        role : response.data.role
-      }
-      console.log(currentUserData)
-      localStorage.setItem('currentUserData',JSON.stringify(currentUserData))
-      window.location.href = "/homePage"
-
-
-    }
-    else{
+        email: email,
+        role: response.data.role,
+      };
+      console.log(currentUserData);
+      localStorage.setItem("currentUserData", JSON.stringify(currentUserData));
+      window.location.href = "/homePage";
+    } else {
       Swal.fire({
-        title: 'Error',
-        text: 'Please try again', 
-        icon: 'error', 
-      })
+        title: "Error",
+        text: "Please try again",
+        icon: "error",
+      });
     }
-
   };
 
   return (
-    <Container  component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs">
       <div
         style={{
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          height : "100vh",
-          justifyContent : "center"
+          height: "100vh",
+          justifyContent: "center",
         }}
       >
         <Typography component="h1" variant="h5">
@@ -78,8 +74,8 @@ const LoginPage = () => {
             name="email"
             autoComplete="email"
             autoFocus
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -91,8 +87,8 @@ const LoginPage = () => {
             type="password"
             id="password"
             autoComplete="current-password"
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Button
             type="submit"
@@ -105,12 +101,24 @@ const LoginPage = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
+              <Link
+                href="#"
+                variant="body2"
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                {"Login Later?"}
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/signup" variant="body2">
+              <Link
+                href="#"
+                variant="body2"
+                onClick={() => {
+                  navigate("/signup");
+                }}
+              >
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

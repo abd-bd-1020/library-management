@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 
@@ -31,15 +32,15 @@ const CartItem = ({ item, addToCart, removeFromCart }) => {
       <div>
         <h3>{item.title}</h3>
         <div className="information">
-          <p>Price: ${item.price}</p>
-          <p>Total: ${(item.amount * item.price).toFixed(2)}</p>
+          <p>Genre: ${item.genre}</p>
+          <p>Total: ${item.count.toFixed(2)}</p>
         </div>
         <div className="buttons">
           <Button
             size="small"
             disableElevation
             variant="contained"
-            onClick={() => removeFromCart(item.id)}
+            onClick={() => removeFromCart(item._id)}
           >
             -
           </Button>
@@ -54,7 +55,7 @@ const CartItem = ({ item, addToCart, removeFromCart }) => {
           </Button>
         </div>
       </div>
-      <img src={item.image} alt={item.title} />
+      <img src={item.thumbnailUrl} alt={item.title} />
     </Wrapper>
   );
 };

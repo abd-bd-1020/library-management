@@ -13,6 +13,7 @@ import { ClientEnum } from "../ClientEnum";
 import BookService from "../services/BookService";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import useCartStore from "../store/useCartStore";
 
 const StyledBox = {
   p: 1,
@@ -31,6 +32,7 @@ function HomePage() {
   const [sortByRating, setSortByRating] = useState("");
   const [currentUserRole, setCurrentUserRole] = useState("");
   const navigate = useNavigate();
+  const addToCart = useCartStore((state) => state.addToCart);
 
   useEffect(() => {
     const storedBooksData = localStorage.getItem("bookData");
@@ -47,6 +49,25 @@ function HomePage() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedBook(null);
+  };
+  const handleBorrowBook = async (book) => {
+    const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
+    if (!currentUserData) {
+      Swal.fire({
+        title: "Warning",
+        text: "Please login to borrow a book",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Login",
+        cancelButtonText: "Cancel",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        }
+      });
+    } else {
+      addToCart(book);
+    }
   };
 
   const handleDelete = async () => {
@@ -176,6 +197,7 @@ function HomePage() {
                         isAdmin={currentUserRole === ClientEnum.ADMIN_TYPE}
                         handleDelete={handleDelete}
                         handleUpdate={handleUpdate}
+                        handleBorrowBook={handleBorrowBook}
                       />
                     </Grid>
                   ))}

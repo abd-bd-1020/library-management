@@ -12,8 +12,8 @@ const Wrapper = styled.aside`
 
 const Cart = ({ cartItems, addToCart, removeFromCart }) => {
   const isCartOpen = useCartStore((state) => state.isCartOpen);
+  const allCartStoreItems = useCartStore((state) => state.cartItems);
 
-  const [open, setOpen] = useState(true);
   const calculateTotal = (items) =>
     items.reduce((acc, item) => acc + item.amount * item.price, 0);
 
@@ -21,10 +21,11 @@ const Cart = ({ cartItems, addToCart, removeFromCart }) => {
     <Drawer anchor="right" open={isCartOpen}>
       <Wrapper>
         <h2>Your Cart</h2>
-        {cartItems.length === 0 ? <p>No items in cart.</p> : null}
-        {cartItems.map((item) => (
+        <h2>Your Cart</h2>
+        {allCartStoreItems.length === 0 ? <p>No items in cart.</p> : null}
+        {allCartStoreItems.map((item) => (
           <CartItem
-            key={item.id}
+            key={item._id}
             item={item}
             addToCart={addToCart}
             removeFromCart={removeFromCart}
@@ -32,7 +33,6 @@ const Cart = ({ cartItems, addToCart, removeFromCart }) => {
         ))}
         <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
       </Wrapper>
-      <Button onClick={() => setOpen(false)}>Close Cart</Button>
     </Drawer>
   );
 };

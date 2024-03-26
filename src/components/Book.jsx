@@ -26,7 +26,14 @@ const StyledPrice = {
   textAlign: "center",
 };
 
-function Book({ book, onOpenModal, isAdmin, handleDelete, handleUpdate }) {
+function Book({
+  book,
+  onOpenModal,
+  isAdmin,
+  handleDelete,
+  handleUpdate,
+  handleBorrowBook,
+}) {
   if (!book) {
     return null;
   }
@@ -106,8 +113,12 @@ function Book({ book, onOpenModal, isAdmin, handleDelete, handleUpdate }) {
               </Button>
             </>
           ) : (
-            <Button variant="contained" size="small">
-              Borrow it
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => handleBorrowBook(book)}
+            >
+              Borrow
             </Button>
           )}
           <Button

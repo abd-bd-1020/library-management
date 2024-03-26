@@ -9,61 +9,60 @@ import {
 } from "@mui/material";
 import DefaultService from "../services/DefaultService";
 import { ClientEnum } from "../ClientEnum";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const SignupPage = () => {
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-   const  handleSignUp = async (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
     if (!firstName || !lastName || !email || !password) {
       alert("Please fill in all fields.");
       return;
     }
     const payload = {
-      firstName : firstName,
-      lastName : lastName,
-      email : email,
-      password : password,
-      role : ClientEnum.USER_TYPE
-
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      role: ClientEnum.USER_TYPE,
     };
 
     const response = await DefaultService.instance.signup(payload);
     if (response.status === true) {
       Swal.fire({
-        title: 'Success',
-        text: 'Sign up successful. Please login', 
-        icon: 'success', 
+        title: "Success",
+        text: "Sign up successful. Please login",
+        icon: "success",
       }).then((result) => {
         if (result.isConfirmed) {
-          window.location.href = '/login';
+          navigate("/login");
         }
       });
-    }
-    else{
+    } else {
       Swal.fire({
-        title: 'Error',
-        text: 'Please try again', 
-        icon: 'error', 
-      })
-
+        title: "Error",
+        text: "Please try again",
+        icon: "error",
+      });
     }
   };
 
   return (
-    <Container  component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs">
       <div
         style={{
           marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          height : "100vh",
-          justifyContent : "center"
+          height: "100vh",
+          justifyContent: "center",
         }}
       >
         <Typography component="h1" variant="h5">
@@ -137,8 +136,14 @@ const SignupPage = () => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="/login" variant="body2">
-                Already have an account? Sign in
+              <Link
+                href="#"
+                variant="body2"
+                onClick={() => {
+                  navigate("/login");
+                }}
+              >
+                {"Already have an account? Sign in"}
               </Link>
             </Grid>
           </Grid>
