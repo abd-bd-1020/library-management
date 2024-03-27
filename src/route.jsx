@@ -10,6 +10,8 @@ import TopBar from "./Layout/TopBar";
 import { Box, CssBaseline, Toolbar } from "@mui/material";
 import BookEditor from "./components/BookEditor";
 import PageLayout from "./Layout/PageLayout";
+import RequestedBooks from "./pages/RequestedBooks";
+import PendingRequests from "./pages/PendingRequests";
 
 const AppRoutes = () => {
   return (
@@ -30,6 +32,15 @@ const AppRoutes = () => {
           </PageLayout>
         }
       />
+      <Route
+        path="/requestedbooks"
+        element={
+          <PageLayout>
+            <RequestedBooks />
+          </PageLayout>
+        }
+      />
+      
       <Route
         path="/login"
         element={
@@ -55,10 +66,10 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/apple"
+        path="/pendingrequests"
         element={
           <PageLayout>
-            <ApplePage />
+            <PendingRequests />
           </PageLayout>
         }
       />

@@ -102,4 +102,24 @@ export default class BookService {
     }
     return DefaultService.instance.defaultResponse();
   }
+  async getAllbooks() {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+        const allBooksJSON = localStorage.getItem("bookData");
+        const allBooks = JSON.parse(allBooksJSON);
+
+        return {
+          status: true,
+          data: allBooks,
+        };
+      } catch (error) {
+        console.log(error);
+        retry++;
+      }
+    }
+    return DefaultService.instance.defaultResponse();
+  }
+
+  
 }

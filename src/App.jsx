@@ -22,6 +22,9 @@ function App() {
     if (localStorage.getItem("bookData") == null) {
       localStorage.setItem("bookData", JSON.stringify(booksData));
     }
+    if (localStorage.getItem("borrowData") == null) {
+      localStorage.setItem("borrowData", JSON.stringify([]));
+    }
   }, []);
 
   return (

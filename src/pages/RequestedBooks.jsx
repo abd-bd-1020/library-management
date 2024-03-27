@@ -10,7 +10,6 @@ import {
   Box,
 } from "@mui/material";
 import { ClientEnum } from "../ClientEnum";
-import BookService from "../services/BookService";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useCartStore from "../store/useCartStore";
@@ -18,11 +17,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import BooksFilter from "../components/BooksFilter";
 import useDashboardStore from "../store/useDashBoardStore";
+import BorrowService from "../services/BorrowService";
 
 
 
-
-function HomePage() {
+function RequestedBooks() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const [booksData, setBooksData] = useState([]);
@@ -35,15 +34,18 @@ function HomePage() {
   const addToCart = useCartStore((state) => state.addToCart);
   const bookNotify = () => toast("book is added to the cart");
   const setDashboardText = useDashboardStore((state) => state.setDashboardText);
+
   
+
+
   useEffect(() => {
-    setDashboardText("All Books")
+    setDashboardText("Requested Books")
 
     const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
     setCurrentUserRole(currentUserData?.role);
     async function fetchData() {
       try {
-        const response = await BookService.instance.getAllbooks();
+        const response = await BorrowService.instance.getBorrowedBookRequest({"email" : currentUserData.email});
         setBooksData(response.data);
       } catch (error) {
         console.error("Error fetching books:", error);
@@ -55,61 +57,8 @@ function HomePage() {
   
   }, []);
 
-  const handleOpenModal = (book) => {
-    setSelectedBook(book);
-    setIsModalOpen(true);
-  };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedBook(null);
-  };
-  const handleBorrowBook = async (book) => {
-    const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
-    if (!currentUserData) {
-      Swal.fire({
-        title: "Warning",
-        text: "Please login to borrow a book",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Login",
-        cancelButtonText: "Cancel",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login");
-        }
-      });
-    } else {
-      addToCart(book);
-      bookNotify();
-    }
-  };
 
-  const handleDelete = async (book) => {
-    const payload = {
-      id: book._id,
-    };
-    const response = await BookService.instance.deleteBook(payload);
-    if (response.status === true) {
-      const updatedBooksData = booksData.filter(
-        (item) => item._id !== book._id
-      );
-      setBooksData(updatedBooksData);
-    } else {
-      Swal.fire({
-        title: "Error",
-        text: "Please try again",
-        icon: "error",
-      });
-    }
-  };
-  const handleUpdate = (book) => {
-    navigate("/bookeditor", {
-      state: {
-        book: book,
-      },
-    });
-  };
 
   const filteredBooks = booksData.filter((book) => {
     return (
@@ -159,11 +108,7 @@ function HomePage() {
                       <Book
                         key={book._id}
                         book={book}
-                        onOpenModal={handleOpenModal}
-                        isAdmin={currentUserRole === ClientEnum.ADMIN_TYPE}
-                        handleDelete={handleDelete}
-                        handleUpdate={handleUpdate}
-                        handleBorrowBook={handleBorrowBook}
+                      
                       />
                     </Grid>
                   ))}
@@ -192,4 +137,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default RequestedBooks;

@@ -8,9 +8,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import useCartStore from "../store/useCartStore";
 import CartIconButton from "../components/CartIconButton";
+import useDashboardStore from "../store/useDashBoardStore";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -35,8 +35,8 @@ const TopBar = ({ open, toggleDrawer }) => {
 
   const navigate = useNavigate();
   const toggleCart = useCartStore((state) => state.toggleCart);
-
   const [currentUserData, setCurrentUserData] = useState(null);
+  const dashboardText = useDashboardStore((state) => state.dashboardText);
 
 
 
@@ -77,7 +77,7 @@ const TopBar = ({ open, toggleDrawer }) => {
           noWrap
           sx={{ flexGrow: 1 }}
         >
-          Dashboard
+          {dashboardText}
         </Typography>
         <CartIconButton  toggleCart={toggleCart}>
         </CartIconButton>
