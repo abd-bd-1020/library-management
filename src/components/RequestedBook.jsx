@@ -45,8 +45,8 @@ function RequestedBook({ requestedBookData }) {
     >
       <CardMedia
         component="img"
-        image={book.thumbnailUrl}
-        alt={book.title}
+        image={requestedBookData.book.thumbnailUrl}
+        alt={requestedBookData.book.title}
         sx={{ width: 120, height: 170, objectFit: "cover" }}
       />
       <CardContent

@@ -19,9 +19,8 @@ export default class BorrowService {
     return userData;
   }
 
-
   async requestBorrowBooks(payload) {
-    console.log(payload)
+    console.log(payload);
     let retry = 0;
     while (retry++ < 2) {
       try {
@@ -30,15 +29,14 @@ export default class BorrowService {
 
         for (let i = 0; i < payload.books.length; i++) {
           const singleBorrowBook = {
-            "amount": payload.books[i].amount,
-            "userEmail": payload.email,
-            "bookId": payload.books[i]._id,
-            "isBorrowed": false,
-            "borrowId": uuid(),
-            "requestTime": new Date()
-
-          }
-          allBorrowData.push(singleBorrowBook)
+            amount: payload.books[i].amount,
+            userEmail: payload.email,
+            bookId: payload.books[i]._id,
+            isBorrowed: false,
+            borrowId: uuid(),
+            requestTime: new Date(),
+          };
+          allBorrowData.push(singleBorrowBook);
         }
         localStorage.setItem("borrowData", JSON.stringify(allBorrowData));
         return {
@@ -61,27 +59,37 @@ export default class BorrowService {
         const allBooks = JSON.parse(allBooksJSON);
         const allRequestedBooksJSON = localStorage.getItem("borrowData");
         const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
-        let requestedBooksOfSpecificPerson = []
-        allRequestedBooks.forEach(requestedBook => {
-          if (requestedBook.userEmail === payload.email && requestedBook.isBorrowed == false) {
+        let requestedBooksOfSpecificPerson = [];
+        allRequestedBooks.forEach((requestedBook) => {
+          if (
+            requestedBook.userEmail === payload.email &&
+            requestedBook.isBorrowed == false
+          ) {
             const bookId = requestedBook.bookId;
-            const existingBook = allBooks.find(book => book._id === bookId);
+            const existingBook = allBooks.find((book) => book._id === bookId);
 
             if (existingBook) {
-              requestedBooksOfSpecificPerson = requestedBooksOfSpecificPerson.map(book => {
-                if (book._id === bookId) {
-                  book.amount += requestedBook.amount;
-                }
-                return book;
-              });
+              requestedBooksOfSpecificPerson =
+                requestedBooksOfSpecificPerson.map((book) => {
+                  if (book._id === bookId) {
+                    book.amount += requestedBook.amount;
+                  }
+                  return book;
+                });
 
-              if (!requestedBooksOfSpecificPerson.some(book => book._id === bookId)) {
-                requestedBooksOfSpecificPerson.push({ ...existingBook, "amount": requestedBook.amount });
+              if (
+                !requestedBooksOfSpecificPerson.some(
+                  (book) => book._id === bookId
+                )
+              ) {
+                requestedBooksOfSpecificPerson.push({
+                  ...existingBook,
+                  amount: requestedBook.amount,
+                });
               }
             }
           }
         });
-
 
         return {
           status: true,
@@ -95,8 +103,6 @@ export default class BorrowService {
     return DefaultService.instance.defaultResponse();
   }
 
-
-
   async getAllBorrowRequests() {
     let retry = 0;
     while (retry++ < 2) {
@@ -107,36 +113,23 @@ export default class BorrowService {
         const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
         const allUserDataJSON = localStorage.getItem("userData");
         const allUserData = JSON.parse(allUserDataJSON);
-        
-        let allRequestedBooksWithData = []
 
-        allUserData.forEach(user => {
-          allRequestedBooks.forEach(requestedBook => {
-            if (requestedBook.userEmail === user.email && requestedBook.isBorrowed == false) {
-              const bookId = requestedBook.bookId;
-              const existingBook = allBooks.find(book => book._id === bookId);
-
-              if (existingBook) {
-                allRequestedBooksWithData = allRequestedBooksWithData.map(singleBorrowBookData => {
-                  if (singleBorrowBookData.book._id === bookId) {
-                    singleBorrowBookData.amount += requestedBook.amount;
-                  }
-                  return book;
-                });
-
-                if (!allRequestedBooksWithData.some(book => book._id === bookId)) {
-                  const singleBorrowBookData = {
-                      "book" :  existingBook,
-                      "user" : user,
-                      "amount" :  requestedBook.amount
-                  }
-                  allRequestedBooksWithData.push(singleBorrowBookData);
-                }
-              }
-            }
-          })
+        const allRequestedBooksWithData = [];
+        allRequestedBooks.forEach((requestedBook) => {
+          const book = allBooks.find(
+            (book) => book._id === requestedBook.bookId
+          );
+          const user = allUserData.find(
+            (user) => user.email === requestedBook.userEmail
+          );
+          allRequestedBooksWithData.push({
+            id: requestedBook.borrowId,
+            book: book,
+            user: user,
+            amount: requestedBook.amount,
+            requestTime: requestedBook.requestTime,
+          });
         });
-
 
         return {
           status: true,

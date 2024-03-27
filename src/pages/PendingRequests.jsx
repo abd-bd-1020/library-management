@@ -13,14 +13,12 @@ import { ClientEnum } from "../ClientEnum";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useCartStore from "../store/useCartStore";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import BooksFilter from "../components/BooksFilter";
 import useDashboardStore from "../store/useDashBoardStore";
 import BorrowService from "../services/BorrowService";
 import RequestedBook from "../components/RequestedBook";
-
-
 
 function PendingRequests() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,11 +34,8 @@ function PendingRequests() {
   const bookNotify = () => toast("book is added to the cart");
   const setDashboardText = useDashboardStore((state) => state.setDashboardText);
 
-  
-
-
   useEffect(() => {
-    setDashboardText("Pending Requests")
+    setDashboardText("Pending Requests");
 
     const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
     setCurrentUserRole(currentUserData?.role);
@@ -54,42 +49,21 @@ function PendingRequests() {
     }
 
     fetchData();
-
-  
   }, []);
 
-
-
-
-  const filteredBooks = booksData.filter((book) => {
-    return (
-      book.title.toLowerCase().includes(searchByName.toLowerCase()) &&
-      book.authors.some((author) =>
-        author.toLowerCase().includes(searchByAuthor.toLowerCase())
-      ) &&
-      (selectedGenre === ClientEnum.ALL_GENRE || book.genre === selectedGenre)
-    );
-  });
-
-  if (sortByRating === "asc") {
-    filteredBooks.sort((a, b) => a.rating - b.rating);
-  } else if (sortByRating === "desc") {
-    filteredBooks.sort((a, b) => b.rating - a.rating);
-  }
-
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} >
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Grid container spacing={3}>
-      <BooksFilter
-              searchByName={searchByName}
-              setSearchByName={setSearchByName}
-              searchByAuthor={searchByAuthor}
-              setSearchByAuthor={setSearchByAuthor}
-              selectedGenre={selectedGenre}
-              setSelectedGenre={setSelectedGenre}
-              sortByRating={sortByRating}
-              setSortByRating={setSortByRating}
-            />
+        <BooksFilter
+          searchByName={searchByName}
+          setSearchByName={setSearchByName}
+          searchByAuthor={searchByAuthor}
+          setSearchByAuthor={setSearchByAuthor}
+          selectedGenre={selectedGenre}
+          setSelectedGenre={setSelectedGenre}
+          sortByRating={sortByRating}
+          setSortByRating={setSortByRating}
+        />
         <Grid item xs={12}>
           <Paper
             sx={{
@@ -104,12 +78,11 @@ function PendingRequests() {
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
               <Grid container spacing={3}>
                 <>
-                  {filteredBooks.map((requestedBookData) => (
-                    <Grid item xs={12} md={6} lg={3} key={book._id}>
+                  {booksData.map((requestedBookData) => (
+                    <Grid item xs={10} md={6} lg={4} key={requestedBookData.id}>
                       <RequestedBook
                         key={requestedBookData.book._id}
                         requestedBookData={requestedBookData}
-                      
                       />
                     </Grid>
                   ))}
@@ -126,14 +99,14 @@ function PendingRequests() {
           </Paper>
         </Grid>
       </Grid>
-      <ToastContainer 
+      <ToastContainer
         autoClose={2000}
         position="bottom-right"
         closeOnClick
         pauseOnFocusLoss
         draggable
-        pauseOnHover/>
-
+        pauseOnHover
+      />
     </Container>
   );
 }
