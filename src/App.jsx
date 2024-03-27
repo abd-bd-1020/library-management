@@ -12,7 +12,7 @@ function App() {
     if (localStorage.getItem("userData") == null) {
       const userDataArr = [
         {
-          email: "admin@gmail.com",
+          email: "admin",
           password: "admin",
           role: ClientEnum.ADMIN_TYPE,
         },

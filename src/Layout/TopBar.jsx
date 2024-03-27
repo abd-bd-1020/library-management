@@ -10,6 +10,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import useCartStore from "../store/useCartStore";
+import CartIconButton from "../components/CartIconButton";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -31,10 +32,13 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const TopBar = ({ open, toggleDrawer }) => {
+
   const navigate = useNavigate();
   const toggleCart = useCartStore((state) => state.toggleCart);
 
   const [currentUserData, setCurrentUserData] = useState(null);
+
+
 
   useEffect(() => {
     const userData = localStorage.getItem("currentUserData");
@@ -75,9 +79,8 @@ const TopBar = ({ open, toggleDrawer }) => {
         >
           Dashboard
         </Typography>
-        <IconButton color="inherit" onClick={toggleCart}>
-          <ShoppingCartIcon />
-        </IconButton>
+        <CartIconButton  toggleCart={toggleCart}>
+        </CartIconButton>
         {currentUserData !== null ? (
           <IconButton color="inherit" onClick={handleLogout}>
             <LogoutIcon />

@@ -1,30 +1,8 @@
-import { Button, Paper } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 import React from "react";
-import styled from "styled-components";
+import "../style/essential.css";
 
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  font-family: Arial, Helvetica, sans-serif;
-  border-bottom: 1px solid lightblue;
-  padding-bottom: 20px;
 
-  div {
-    flex: 1;
-  }
-
-  .information,
-  .buttons {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  img {
-    max-width: 80px;
-    object-fit: cover;
-    margin-left: 40px;
-  }
-`;
 
 const StyledButton = {
   height: "28px",
@@ -55,7 +33,7 @@ const StyledButtonWrapper = {
 
 const CartItem = ({ item, addToCart, removeFromCart }) => {
   return (
-    <Wrapper>
+    <Box className = "custom_cart_item">
       <Paper sx={{ display: "flex", gap: "20px", padding: "10px" }}>
         <img
           src={item.thumbnailUrl}
@@ -82,7 +60,6 @@ const CartItem = ({ item, addToCart, removeFromCart }) => {
           <div className="buttons" style={StyledButtonWrapper}>
             <button
               size="small"
-              disableElevation
               variant="contained"
               onClick={() => removeFromCart(item._id)}
               style={StyledButton}
@@ -100,7 +77,7 @@ const CartItem = ({ item, addToCart, removeFromCart }) => {
             </p>
             <button
               size="small"
-              disableElevation
+              
               variant="contained"
               onClick={() => addToCart(item)}
               style={StyledButton}
@@ -110,7 +87,7 @@ const CartItem = ({ item, addToCart, removeFromCart }) => {
           </div>
         </div>
       </Paper>
-    </Wrapper>
+    </Box>
   );
 };
 

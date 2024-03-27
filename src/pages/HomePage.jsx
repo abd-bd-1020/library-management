@@ -14,6 +14,9 @@ import BookService from "../services/BookService";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useCartStore from "../store/useCartStore";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const StyledBox = {
   p: 1,
@@ -33,7 +36,9 @@ function HomePage() {
   const [currentUserRole, setCurrentUserRole] = useState("");
   const navigate = useNavigate();
   const addToCart = useCartStore((state) => state.addToCart);
+  const bookNotify = () => toast("book is added to the cart");
 
+  
   useEffect(() => {
     const storedBooksData = localStorage.getItem("bookData");
     setBooksData(JSON.parse(storedBooksData));
@@ -67,10 +72,11 @@ function HomePage() {
       });
     } else {
       addToCart(book);
+      bookNotify();
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (book) => {
     const payload = {
       id: book._id,
     };
@@ -113,7 +119,7 @@ function HomePage() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} >
       <Grid container spacing={3}>
         <Grid item xs={12} md={12} lg={12}>
           <Paper sx={{ mt: 12 }}>
@@ -214,6 +220,14 @@ function HomePage() {
           </Paper>
         </Grid>
       </Grid>
+      <ToastContainer 
+        autoClose={2000}
+        position="bottom-right"
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover/>
+
     </Container>
   );
 }
