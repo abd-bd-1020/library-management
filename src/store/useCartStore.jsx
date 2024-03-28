@@ -22,10 +22,10 @@ const useCartStore = create((set) => ({
         cartItems: [...state.cartItems, { ...item, amount: 1 }],
       };
     }),
-    removeAllFromCart: () => // Updated function to remove all items
+  removeAllFromCart: () =>
     set(() => ({
-      cartItems: [], // Resetting cartItems to an empty array
-    })), 
+      cartItems: [],
+    })),
   removeFromCart: (_id) =>
     set((state) => ({
       cartItems: state.cartItems.reduce((acc, item) => {

@@ -120,6 +120,4 @@ export default class BookService {
     }
     return DefaultService.instance.defaultResponse();
   }
-
-  
 }

@@ -16,7 +16,7 @@ function PageLayout({ showBar = true, children }) {
       <CssBaseline />
       {showBar && <TopBar open={open} toggleDrawer={toggleDrawer} />}
       {showBar && <Sidebar open={open} toggleDrawer={toggleDrawer} />}
-      {showBar && <Cart/>}
+      {showBar && <Cart />}
 
       <Box
         component="main"

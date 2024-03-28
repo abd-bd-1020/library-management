@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
 import BookDetailsModal from "../../components/Book/BookDetailsModal";
 import Book from "../../components/Book/Book";
-import {
-  Container,
-  Grid,
-  Paper,
-
-} from "@mui/material";
+import { Container, Grid, Paper } from "@mui/material";
 import { ClientEnum } from "../../ClientEnum";
 import BookService from "../../services/BookService";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import useCartStore from "../../store/useCartStore";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import BooksFilter from "../../components/BooksFilter";
 import useDashboardStore from "../../store/useDashBoardStore";
-
-
-
 
 function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,13 +25,14 @@ function HomePage() {
   const addToCart = useCartStore((state) => state.addToCart);
   const bookNotify = () => toast("book is added to the cart");
   const setDashboardText = useDashboardStore((state) => state.setDashboardText);
-  const setDashboardColor = useDashboardStore((state) => state.setDashboardColor);
-  const setCurrentRoleFromStore = useDashboardStore((state) => state.setCurrentRole);
+  const setDashboardColor = useDashboardStore(
+    (state) => state.setDashboardColor
+  );
+  const setCurrentRoleFromStore = useDashboardStore(
+    (state) => state.setCurrentRole
+  );
 
-
-  
   useEffect(() => {
-
     async function fetchData() {
       try {
         const response = await BookService.instance.getAllbooks();
@@ -50,33 +43,23 @@ function HomePage() {
     }
 
     fetchData();
-
-  
   }, []);
 
   useEffect(() => {
-
-
-    setDashboardText("All Books")
+    setDashboardText("All Books");
 
     const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
     setCurrentUserRole(currentUserData?.role);
-    if(currentUserRole){
-      setCurrentRoleFromStore(currentUserRole)
+    if (currentUserRole) {
+      setCurrentRoleFromStore(currentUserRole);
     }
-    if(currentUserRole == ClientEnum.ADMIN_TYPE){
-      setDashboardColor("#0a335b")
+    if (currentUserRole == ClientEnum.ADMIN_TYPE) {
+      setDashboardColor("#0a335b");
+    } else if (currentUserRole == ClientEnum.USER_TYPE) {
+      setDashboardColor("#1976d2");
+    } else {
+      setDashboardColor("#1976d2");
     }
-    else if(currentUserRole == ClientEnum.USER_TYPE){
-      setDashboardColor("#1976d2")
-    }
-    else {
-      setDashboardColor("#1976d2")
-    }
-    
-
-
-  
   }, [currentUserRole]);
 
   const handleOpenModal = (book) => {
@@ -152,18 +135,18 @@ function HomePage() {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }} >
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Grid container spacing={3}>
-      <BooksFilter
-              searchByName={searchByName}
-              setSearchByName={setSearchByName}
-              searchByAuthor={searchByAuthor}
-              setSearchByAuthor={setSearchByAuthor}
-              selectedGenre={selectedGenre}
-              setSelectedGenre={setSelectedGenre}
-              sortByRating={sortByRating}
-              setSortByRating={setSortByRating}
-            />
+        <BooksFilter
+          searchByName={searchByName}
+          setSearchByName={setSearchByName}
+          searchByAuthor={searchByAuthor}
+          setSearchByAuthor={setSearchByAuthor}
+          selectedGenre={selectedGenre}
+          setSelectedGenre={setSelectedGenre}
+          sortByRating={sortByRating}
+          setSortByRating={setSortByRating}
+        />
         <Grid item xs={12}>
           <Paper
             sx={{
@@ -204,14 +187,14 @@ function HomePage() {
           </Paper>
         </Grid>
       </Grid>
-      <ToastContainer 
+      <ToastContainer
         autoClose={2000}
         position="bottom-right"
         closeOnClick
         pauseOnFocusLoss
         draggable
-        pauseOnHover/>
-
+        pauseOnHover
+      />
     </Container>
   );
 }

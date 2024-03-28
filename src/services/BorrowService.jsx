@@ -51,7 +51,6 @@ export default class BorrowService {
     return DefaultService.instance.defaultResponse();
   }
 
-
   async getBorrowedBookRequestOfSingleUser(payload) {
     let retry = 0;
     while (retry++ < 2) {
@@ -71,12 +70,12 @@ export default class BorrowService {
 
             if (existingBook) {
               const listItem = {
-                "bookTitle" : existingBook.title,
-                "id" : requestedBook.borrowId,
-                "amount" : requestedBook.amount,
-              }
+                bookTitle: existingBook.title,
+                id: requestedBook.borrowId,
+                amount: requestedBook.amount,
+              };
 
-              borrowedBooksOfSpecificPerson.push(listItem)
+              borrowedBooksOfSpecificPerson.push(listItem);
             }
           }
         });
@@ -93,8 +92,6 @@ export default class BorrowService {
     return DefaultService.instance.defaultResponse();
   }
 
-
-
   async getAllAcceptedRequests() {
     let retry = 0;
     while (retry++ < 2) {
@@ -108,7 +105,7 @@ export default class BorrowService {
 
         const allRequestedBooksWithData = [];
         allRequestedBooks.forEach((requestedBook) => {
-          if(!requestedBook.isBorrowed)return
+          if (!requestedBook.isBorrowed) return;
           const book = allBooks.find(
             (book) => book._id === requestedBook.bookId
           );
@@ -149,7 +146,7 @@ export default class BorrowService {
 
         const allRequestedBooksWithData = [];
         allRequestedBooks.forEach((requestedBook) => {
-          if(requestedBook.isBorrowed)return
+          if (requestedBook.isBorrowed) return;
           const book = allBooks.find(
             (book) => book._id === requestedBook.bookId
           );
@@ -178,25 +175,24 @@ export default class BorrowService {
   }
 
   async acceptSingleRequest(payload) {
-    
     let retry = 0;
     while (retry++ < 2) {
       try {
-
         const allRequestedBooksJSON = localStorage.getItem("borrowData");
         const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
 
-
-
-        const updatedBorrowedBooks = allRequestedBooks.map(requestedBook => {
+        const updatedBorrowedBooks = allRequestedBooks.map((requestedBook) => {
           if (requestedBook.borrowId === payload.id) {
             return { ...requestedBook, isBorrowed: true };
           } else {
             return requestedBook;
           }
         });
-        console.log(updatedBorrowedBooks)
-        localStorage.setItem("borrowData", JSON.stringify(updatedBorrowedBooks));
+        console.log(updatedBorrowedBooks);
+        localStorage.setItem(
+          "borrowData",
+          JSON.stringify(updatedBorrowedBooks)
+        );
 
         return {
           status: true,
@@ -214,11 +210,15 @@ export default class BorrowService {
     let retry = 0;
     while (retry++ < 2) {
       try {
-
         const allRequestedBooksJSON = localStorage.getItem("borrowData");
         const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
-        const updatedBorrowedBooks = allRequestedBooks.filter(requestedBook => requestedBook.borrowId !== payload.id);
-        localStorage.setItem("borrowData", JSON.stringify(updatedBorrowedBooks));
+        const updatedBorrowedBooks = allRequestedBooks.filter(
+          (requestedBook) => requestedBook.borrowId !== payload.id
+        );
+        localStorage.setItem(
+          "borrowData",
+          JSON.stringify(updatedBorrowedBooks)
+        );
 
         return {
           status: true,
@@ -238,7 +238,7 @@ export default class BorrowService {
       try {
         const allRequestedBooksJSON = localStorage.getItem("borrowData");
         const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
-  
+
         payload.data.forEach((id) => {
           allRequestedBooks.forEach((requestedBook) => {
             if (requestedBook.borrowId === id) {
@@ -246,9 +246,9 @@ export default class BorrowService {
             }
           });
         });
-  
+
         localStorage.setItem("borrowData", JSON.stringify(allRequestedBooks));
-  
+
         return {
           status: true,
           data: allRequestedBooks,
@@ -260,7 +260,6 @@ export default class BorrowService {
     }
     return DefaultService.instance.defaultResponse();
   }
-  
 
   async rejectMarkedRequest(payload) {
     let retry = 0;
@@ -268,11 +267,16 @@ export default class BorrowService {
       try {
         const allRequestedBooksJSON = localStorage.getItem("borrowData");
         const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
-  
-        const updatedBorrowedBooks = allRequestedBooks.filter(requestedBook => !payload.data.includes(requestedBook.borrowId));
-  
-        localStorage.setItem("borrowData", JSON.stringify(updatedBorrowedBooks));
-  
+
+        const updatedBorrowedBooks = allRequestedBooks.filter(
+          (requestedBook) => !payload.data.includes(requestedBook.borrowId)
+        );
+
+        localStorage.setItem(
+          "borrowData",
+          JSON.stringify(updatedBorrowedBooks)
+        );
+
         return {
           status: true,
           data: updatedBorrowedBooks,
@@ -284,7 +288,6 @@ export default class BorrowService {
     }
     return DefaultService.instance.defaultResponse();
   }
-  
 
   async getBorrowedBookOfSingleUser(payload) {
     let retry = 0;
@@ -305,12 +308,12 @@ export default class BorrowService {
 
             if (existingBook) {
               const listItem = {
-                "bookTitle" : existingBook.title,
-                "id" : requestedBook.borrowId,
-                "amount" : requestedBook.amount,
-              }
+                bookTitle: existingBook.title,
+                id: requestedBook.borrowId,
+                amount: requestedBook.amount,
+              };
 
-              borrowedBooksOfSpecificPerson.push(listItem)
+              borrowedBooksOfSpecificPerson.push(listItem);
             }
           }
         });
@@ -327,16 +330,19 @@ export default class BorrowService {
     return DefaultService.instance.defaultResponse();
   }
 
-  
   async giveBackSingleBook(payload) {
     let retry = 0;
     while (retry++ < 2) {
       try {
-
         const allRequestedBooksJSON = localStorage.getItem("borrowData");
         const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
-        const updatedBorrowedBooks = allRequestedBooks.filter(requestedBook => requestedBook.borrowId !== payload.id);
-        localStorage.setItem("borrowData", JSON.stringify(updatedBorrowedBooks));
+        const updatedBorrowedBooks = allRequestedBooks.filter(
+          (requestedBook) => requestedBook.borrowId !== payload.id
+        );
+        localStorage.setItem(
+          "borrowData",
+          JSON.stringify(updatedBorrowedBooks)
+        );
 
         return {
           status: true,
@@ -354,11 +360,15 @@ export default class BorrowService {
     let retry = 0;
     while (retry++ < 2) {
       try {
-
         const allRequestedBooksJSON = localStorage.getItem("borrowData");
         const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
-        const updatedBorrowedBooks = allRequestedBooks.filter(requestedBook => requestedBook.borrowId !== payload.id);
-        localStorage.setItem("borrowData", JSON.stringify(updatedBorrowedBooks));
+        const updatedBorrowedBooks = allRequestedBooks.filter(
+          (requestedBook) => requestedBook.borrowId !== payload.id
+        );
+        localStorage.setItem(
+          "borrowData",
+          JSON.stringify(updatedBorrowedBooks)
+        );
 
         return {
           status: true,
@@ -371,12 +381,4 @@ export default class BorrowService {
     }
     return DefaultService.instance.defaultResponse();
   }
-
-  
-
-  
-
-
-  
-
 }

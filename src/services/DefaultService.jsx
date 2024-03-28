@@ -1,18 +1,18 @@
 import { ServerConfig } from "../config/ServerConfig";
-import { ClientEnum } from "../ClientEnum"
+import { ClientEnum } from "../ClientEnum";
 import axios from "axios";
 
 export default class DefaultService {
   static instance = DefaultService.instance || new DefaultService();
 
-  getUserByEmail(email){
-    const storedUserDataString = localStorage.getItem('userData');
-    const userDataArr =  JSON.parse(storedUserDataString);
-    var userData = null
+  getUserByEmail(email) {
+    const storedUserDataString = localStorage.getItem("userData");
+    const userDataArr = JSON.parse(storedUserDataString);
+    var userData = null;
     userDataArr.forEach((user) => {
-      if (user.email === email ) {
-          userData = user;
-    }
+      if (user.email === email) {
+        userData = user;
+      }
     });
     return userData;
   }
@@ -53,20 +53,15 @@ export default class DefaultService {
 
     while (retry++ < 2) {
       try {
-
-
         const userData = this.getUserByEmail(payload.email);
-        if(userData){
-          if(userData.password === payload.password){
-              return {
-                status: true,
-                data : {role : userData.role}
-              }
+        if (userData) {
+          if (userData.password === payload.password) {
+            return {
+              status: true,
+              data: { role: userData.role },
+            };
           }
         }
-
-        
-        
       } catch (error) {
         console.log(error);
         retry++;
@@ -92,24 +87,21 @@ export default class DefaultService {
         //     data: loginResponse.data,
         //   };
         // }
-        if(!this.getUserByEmail(payload.email)){
-          const storedUserDataString = localStorage.getItem('userData');
-          const userDataArr =  JSON.parse(storedUserDataString);
-          userDataArr.push(payload)
-          localStorage.setItem('userData',JSON.stringify(userDataArr))
+        if (!this.getUserByEmail(payload.email)) {
+          const storedUserDataString = localStorage.getItem("userData");
+          const userDataArr = JSON.parse(storedUserDataString);
+          userDataArr.push(payload);
+          localStorage.setItem("userData", JSON.stringify(userDataArr));
           return {
-                status: true,
-                data: "Success",
-              };
-        }
-        else{
+            status: true,
+            data: "Success",
+          };
+        } else {
           return {
             status: false,
             data: "User already exists",
           };
         }
-  
-
       } catch (error) {
         console.log(error);
         retry++;
@@ -126,7 +118,7 @@ export default class DefaultService {
         const loginResponse = await axios.post(
           ServerConfig.url.API_URL + "/user/reset_password",
           payload,
-          DefaultService.instance.getHeaderWithToken(),
+          DefaultService.instance.getHeaderWithToken()
         );
 
         if (loginResponse.status == "200") {

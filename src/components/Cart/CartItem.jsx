@@ -1,8 +1,6 @@
-import { Box, Button, Paper } from "@mui/material";
+import { Box, Paper } from "@mui/material";
 import React from "react";
 import "../../style/essential.css";
-
-
 
 const StyledButton = {
   height: "28px",
@@ -33,7 +31,7 @@ const StyledButtonWrapper = {
 
 const CartItem = ({ item, addToCart, removeFromCart }) => {
   return (
-    <Box className = "custom_cart_item">
+    <Box className="custom_cart_item">
       <Paper sx={{ display: "flex", gap: "20px", padding: "10px" }}>
         <img
           src={item.thumbnailUrl}
@@ -77,7 +75,6 @@ const CartItem = ({ item, addToCart, removeFromCart }) => {
             </p>
             <button
               size="small"
-              
               variant="contained"
               onClick={() => addToCart(item)}
               style={StyledButton}

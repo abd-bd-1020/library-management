@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Container, Grid, Paper } from "@mui/material";
+import { Container } from "@mui/material";
 import useDashboardStore from "../../store/useDashBoardStore";
 import BorrowService from "../../services/BorrowService";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserBookRequestTable from "../../components/Table/UserBookRequestTable";
 
@@ -20,7 +20,10 @@ function RequestedBooks() {
     const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
     async function fetchData() {
       try {
-        const response = await BorrowService.instance.getBorrowedBookRequestOfSingleUser({ "email": currentUserData.email });
+        const response =
+          await BorrowService.instance.getBorrowedBookRequestOfSingleUser({
+            email: currentUserData.email,
+          });
         setBorrowedBooksData(response.data);
       } catch (error) {
         console.error("Error fetching books:", error);
@@ -31,21 +34,24 @@ function RequestedBooks() {
   }, [isReload]);
 
   const handleCancel = async (borrowedbook) => {
-    const response = await BorrowService.instance.cancelBookRequest({ "id": borrowedbook.id });
+    const response = await BorrowService.instance.cancelBookRequest({
+      id: borrowedbook.id,
+    });
     if (response.status) {
       cancelRequestkNotify();
       setIsReload(!isReload);
     } else {
       errorNotify();
     }
-  }
+  };
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-
-
-      <UserBookRequestTable borrowedBookData={borrowedBookData} handleCancel={handleCancel} isBorrow = {false} />
-
+      <UserBookRequestTable
+        borrowedBookData={borrowedBookData}
+        handleCancel={handleCancel}
+        isBorrow={false}
+      />
 
       <ToastContainer
         autoClose={2000}

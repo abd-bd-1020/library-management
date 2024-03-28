@@ -7,8 +7,8 @@ const CartIconButton = ({ toggleCart }) => {
   const cartItemsCount = useCartStore((state) => state.cartItems.length);
 
   return (
-    <IconButton style={{height : "40px"}} color="inherit" onClick={toggleCart}>
-      <div style={{ position: "relative",height : "24px" }}>
+    <IconButton style={{ height: "40px" }} color="inherit" onClick={toggleCart}>
+      <div style={{ position: "relative", height: "24px" }}>
         <ShoppingCartIcon />
         {cartItemsCount > 0 && (
           <span

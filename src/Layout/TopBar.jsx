@@ -33,16 +33,14 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const TopBar = ({ open, toggleDrawer }) => {
-
   const navigate = useNavigate();
   const toggleCart = useCartStore((state) => state.toggleCart);
   const [currentUserData, setCurrentUserData] = useState(null);
   const dashboardText = useDashboardStore((state) => state.dashboardText);
   const dashboardColor = useDashboardStore((state) => state.dashboardColor);
-  const currentUserRoleFromStore = useDashboardStore((state) => state.currentRole);
-
-
-
+  const currentUserRoleFromStore = useDashboardStore(
+    (state) => state.currentRole
+  );
 
   useEffect(() => {
     const userData = localStorage.getItem("currentUserData");
@@ -56,7 +54,12 @@ const TopBar = ({ open, toggleDrawer }) => {
     setCurrentUserData(null);
   };
   return (
-    <AppBar style={{backgroundColor : dashboardColor}} className="page-header" position="absolute" open={open}> 
+    <AppBar
+      style={{ backgroundColor: dashboardColor }}
+      className="page-header"
+      position="absolute"
+      open={open}
+    >
       <Toolbar
         sx={{
           pr: "24px",
@@ -83,9 +86,9 @@ const TopBar = ({ open, toggleDrawer }) => {
         >
           {dashboardText}
         </Typography>
-        {currentUserRoleFromStore===ClientEnum.USER_TYPE&&
-        <CartIconButton  toggleCart={toggleCart}>
-        </CartIconButton>}
+        {currentUserRoleFromStore === ClientEnum.USER_TYPE && (
+          <CartIconButton toggleCart={toggleCart}></CartIconButton>
+        )}
         {currentUserData !== null ? (
           <IconButton color="inherit" onClick={handleLogout}>
             <LogoutIcon />
