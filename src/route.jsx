@@ -4,7 +4,7 @@ import HomePage from "./pages/DefaultPages/HomePage";
 import LoginPage from "./pages/DefaultPages/LogIn";
 import SignupPage from "./pages/DefaultPages/SignUp";
 
-import BookEditor from "./components/BookEditor";
+import BookEditor from "./components/Book/BookEditor";
 import PageLayout from "./Layout/PageLayout";
 import RequestedBooks from "./pages/UserPages/RequestedBooks";
 import PendingRequests from "./pages/AdminPages/PendingRequests";

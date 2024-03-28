@@ -2,7 +2,7 @@ import { Box, CssBaseline, Toolbar } from "@mui/material";
 import TopBar from "./TopBar";
 import Sidebar from "./SideBar";
 import { useState } from "react";
-import Cart from "../components/Cart";
+import Cart from "../components/Cart/Cart";
 
 function PageLayout({ showBar = true, children }) {
   const [open, setOpen] = useState(true);

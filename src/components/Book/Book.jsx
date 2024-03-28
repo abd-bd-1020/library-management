@@ -1,6 +1,6 @@
 import React from "react";
 import { CardMedia, CardContent, Typography, Button, Box } from "@mui/material";
-import RatingStars from "./RatingStars";
+import RatingStars from "../RatingStars";
 
 const StyledTitle = {
   fontFamily: "Lato, sans-serif, SiyamRupali",

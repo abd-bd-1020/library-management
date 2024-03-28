@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import BookDetailsModal from "../../components/BookDetailsModal";
-import Book from "../../components/Book";
+import BookDetailsModal from "../../components/Book/BookDetailsModal";
+import Book from "../../components/Book/Book";
 import {
   Container,
   Grid,

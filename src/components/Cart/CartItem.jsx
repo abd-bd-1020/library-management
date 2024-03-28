@@ -1,6 +1,6 @@
 import { Box, Button, Paper } from "@mui/material";
 import React from "react";
-import "../style/essential.css";
+import "../../style/essential.css";
 
 
 

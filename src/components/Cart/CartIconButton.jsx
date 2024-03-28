@@ -1,7 +1,7 @@
 import React from "react";
 import { IconButton } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import useCartStore from "../store/useCartStore";
+import useCartStore from "../../store/useCartStore";
 
 const CartIconButton = ({ toggleCart }) => {
   const cartItemsCount = useCartStore((state) => state.cartItems.length);

@@ -21,7 +21,7 @@ const StyledText = {
   textAlign: "left",
 };
 
-function RequestedBookTable({ booksData, handleAccept, handleReject,checkedList,setCheckedList }) {
+function PendingBookTable({ booksData, handleAccept, handleReject,checkedList,setCheckedList }) {
 
 
 
@@ -98,4 +98,4 @@ function RequestedBookTable({ booksData, handleAccept, handleReject,checkedList,
   );
 }
 
-export default RequestedBookTable;
+export default PendingBookTable;

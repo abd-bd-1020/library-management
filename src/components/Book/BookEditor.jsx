@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { ClientEnum } from "../ClientEnum";
-import BookService from "../services/BookService";
+import { ClientEnum } from "../../ClientEnum";
+import BookService from "../../services/BookService";
 
 const BookEditor = () => {
   const location = useLocation();

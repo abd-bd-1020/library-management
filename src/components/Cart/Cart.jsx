@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import CartItem from "./CartItem";
 import { Box, Button, ClickAwayListener, Drawer } from "@mui/material";
-import useCartStore from "../store/useCartStore";
-import "../style/essential.css";
-import BorrowService from "../services/BorrowService";
+import useCartStore from "../../store/useCartStore";
+import "../../style/essential.css";
+import BorrowService from "../../services/BorrowService";
 import Swal from "sweetalert2";
 
 const Cart = () => {

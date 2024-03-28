@@ -11,7 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useDashboardStore from "../../store/useDashBoardStore";
 import BorrowService from "../../services/BorrowService";
-import RequestedBookTable from "../../components/RequestedBookTable";
+import PendingBookTable from "../../components/Table/PendingBookTable";
 
 function PendingRequests() {
   const [filteredBooksData, setFilteredBooksData] = useState([]);
@@ -164,7 +164,7 @@ function PendingRequests() {
           >
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                 <>
-                      <RequestedBookTable
+                      <PendingBookTable
                         handleAccept={handleAccept}
                         handleReject = {handleReject}
                         booksData={filteredBooksData}

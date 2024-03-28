@@ -9,7 +9,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import useCartStore from "../store/useCartStore";
-import CartIconButton from "../components/CartIconButton";
+import CartIconButton from "../components/Cart/CartIconButton";
 import useDashboardStore from "../store/useDashBoardStore";
 const drawerWidth = 240;
 
