@@ -1,29 +1,24 @@
 import React, { useEffect, useState } from "react";
-import BookDetailsModal from "../components/BookDetailsModal";
-import Book from "../components/Book";
+import BookDetailsModal from "../../components/BookDetailsModal";
+import Book from "../../components/Book";
 import {
   Container,
   Grid,
   Paper,
-  TextField,
-  MenuItem,
-  Box,
+
 } from "@mui/material";
-import { ClientEnum } from "../ClientEnum";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import useCartStore from "../store/useCartStore";
-import { ToastContainer, toast } from 'react-toastify';
+import { ClientEnum } from "../../ClientEnum";
+
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import BooksFilter from "../components/BooksFilter";
-import useDashboardStore from "../store/useDashBoardStore";
-import BorrowService from "../services/BorrowService";
+import BooksFilter from "../../components/BooksFilter";
+import useDashboardStore from "../../store/useDashBoardStore";
+import BorrowService from "../../services/BorrowService";
 
 
 
 function RequestedBooks() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedBook, setSelectedBook] = useState(null);
+
   const [booksData, setBooksData] = useState([]);
   const [searchByName, setSearchByName] = useState("");
   const [searchByAuthor, setSearchByAuthor] = useState("");
@@ -108,13 +103,7 @@ function RequestedBooks() {
                       />
                     </Grid>
                   ))}
-                  {selectedBook && (
-                    <BookDetailsModal
-                      open={isModalOpen}
-                      onClose={handleCloseModal}
-                      book={selectedBook}
-                    />
-                  )}
+       
                 </>
               </Grid>
             </Container>

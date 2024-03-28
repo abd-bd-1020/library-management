@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from "react";
-import BookDetailsModal from "../components/BookDetailsModal";
-import Book from "../components/Book";
 import {
   Container,
   Grid,
   Paper,
   TextField,
-  MenuItem,
   Box,
   Button,
 } from "@mui/material";
-import { ClientEnum } from "../ClientEnum";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import useCartStore from "../store/useCartStore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import BooksFilter from "../components/BooksFilter";
-import useDashboardStore from "../store/useDashBoardStore";
-import BorrowService from "../services/BorrowService";
-import RequestedBook from "../components/RequestedBookTable";
-import RequestedBookTable from "../components/RequestedBookTable";
+import useDashboardStore from "../../store/useDashBoardStore";
+import BorrowService from "../../services/BorrowService";
+import RequestedBookTable from "../../components/RequestedBookTable";
 
 function PendingRequests() {
   const [filteredBooksData, setFilteredBooksData] = useState([]);

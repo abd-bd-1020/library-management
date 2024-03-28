@@ -1,4 +1,3 @@
-// create a error page that will show error 404
 import React from "react";
 
 function ErrorPage() {

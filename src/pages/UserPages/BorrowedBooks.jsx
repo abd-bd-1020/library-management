@@ -15,8 +15,8 @@ import {
   Button
 } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
-import useDashboardStore from "../store/useDashBoardStore";
-import BorrowService from "../services/BorrowService";
+import useDashboardStore from "../../store/useDashBoardStore";
+import BorrowService from "../../services/BorrowService";
 import { ToastContainer, toast } from 'react-toastify';
 const giveBackNotify = () => toast("book is given back");
 const errorNotify = () => toast("Something went wrong");

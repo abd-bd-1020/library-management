@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import BookDetailsModal from "../components/BookDetailsModal";
-import Book from "../components/Book";
+import BookDetailsModal from "../../components/BookDetailsModal";
+import Book from "../../components/Book";
 import {
   Container,
   Grid,
@@ -9,15 +9,15 @@ import {
   MenuItem,
   Box,
 } from "@mui/material";
-import { ClientEnum } from "../ClientEnum";
-import BookService from "../services/BookService";
+import { ClientEnum } from "../../ClientEnum";
+import BookService from "../../services/BookService";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import useCartStore from "../store/useCartStore";
+import useCartStore from "../../store/useCartStore";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import BooksFilter from "../components/BooksFilter";
-import useDashboardStore from "../store/useDashBoardStore";
+import BooksFilter from "../../components/BooksFilter";
+import useDashboardStore from "../../store/useDashBoardStore";
 
 
 

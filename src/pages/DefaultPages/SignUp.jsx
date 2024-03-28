@@ -7,8 +7,8 @@ import {
   Grid,
   Link,
 } from "@mui/material";
-import DefaultService from "../services/DefaultService";
-import { ClientEnum } from "../ClientEnum";
+import DefaultService from "../../services/DefaultService";
+import { ClientEnum } from "../../ClientEnum";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 

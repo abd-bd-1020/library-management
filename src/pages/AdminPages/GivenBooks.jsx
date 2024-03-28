@@ -14,8 +14,8 @@ import {
   Typography
 } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
-import useDashboardStore from "../store/useDashBoardStore";
-import BorrowService from "../services/BorrowService";
+import useDashboardStore from "../../store/useDashBoardStore";
+import BorrowService from "../../services/BorrowService";
 
 
 function GivenBooks() {

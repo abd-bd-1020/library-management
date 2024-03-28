@@ -1,19 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import NotFoundPage from "./pages/NotFoundPage";
-import ApplePage from "./pages/ApplePage";
-import LoginPage from "./pages/LogIn";
-import SignupPage from "./pages/SignUp";
-import Sidebar from "./Layout/SideBar";
-import TopBar from "./Layout/TopBar";
-import { Box, CssBaseline, Toolbar } from "@mui/material";
+import HomePage from "./pages/DefaultPages/HomePage";
+import LoginPage from "./pages/DefaultPages/LogIn";
+import SignupPage from "./pages/DefaultPages/SignUp";
+
 import BookEditor from "./components/BookEditor";
 import PageLayout from "./Layout/PageLayout";
-import RequestedBooks from "./pages/RequestedBooks";
-import PendingRequests from "./pages/PendingRequests";
-import GivenBooks from "./pages/GivenBooks";
-import BorrowedBooks from "./pages/BorrowedBooks";
+import RequestedBooks from "./pages/UserPages/RequestedBooks";
+import PendingRequests from "./pages/AdminPages/PendingRequests";
+import GivenBooks from "./pages/AdminPages/GivenBooks";
+import BorrowedBooks from "./pages/UserPages/BorrowedBooks";
 
 const AppRoutes = () => {
   return (
