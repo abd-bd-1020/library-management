@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import {
+  commonItemList,
   adminItemList,
   userItemList,
   secondaryListItems,
@@ -61,13 +62,21 @@ const Sidebar = ({ open, toggleDrawer }) => {
         </IconButton>
       </Toolbar>
       <Divider />
-      {currentUserRoleFromStore === ClientEnum.ADMIN_TYPE ? (
+      {currentUserRoleFromStore === ClientEnum.GUEST_TYPE && (
+        <List component="nav">
+          {commonItemList}
+          <Divider sx={{ my: 1 }} />
+          {secondaryListItems}
+        </List>
+      )}
+      {currentUserRoleFromStore === ClientEnum.ADMIN_TYPE && (
         <List component="nav">
           {adminItemList}
           <Divider sx={{ my: 1 }} />
           {secondaryListItems}
         </List>
-      ) : (
+      )}
+      {currentUserRoleFromStore === ClientEnum.USER_TYPE && (
         <List component="nav">
           {userItemList}
           <Divider sx={{ my: 1 }} />

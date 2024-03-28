@@ -41,6 +41,9 @@ const TopBar = ({ open, toggleDrawer }) => {
   const currentUserRoleFromStore = useDashboardStore(
     (state) => state.currentRole
   );
+  const setCurrentRoleFromStore = useDashboardStore(
+    (state) => state.setCurrentRole
+  );
 
   useEffect(() => {
     const userData = localStorage.getItem("currentUserData");
@@ -50,6 +53,7 @@ const TopBar = ({ open, toggleDrawer }) => {
   }, []);
 
   const handleLogout = () => {
+    setCurrentRoleFromStore(ClientEnum.GUEST_TYPE);
     localStorage.removeItem("currentUserData");
     setCurrentUserData(null);
   };

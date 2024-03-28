@@ -3,11 +3,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import PeopleIcon from "@mui/icons-material/People";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Link } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
@@ -42,12 +37,6 @@ export const userItemList = (
 
 export const adminItemList = (
   <React.Fragment>
-    <ListItemButton component={Link} to="/homePage">
-      <ListItemIcon>
-        <HomeIcon />
-      </ListItemIcon>
-      <ListItemText primary="Home Page" />
-    </ListItemButton>
     <ListItemButton component={Link} to="/bookeditor">
       <ListItemIcon>
         <BorderColorIcon />
@@ -65,6 +54,17 @@ export const adminItemList = (
         <ForwardIcon />
       </ListItemIcon>
       <ListItemText primary="Given Books" />
+    </ListItemButton>
+  </React.Fragment>
+);
+
+export const commonItemList = (
+  <React.Fragment>
+    <ListItemButton component={Link} to="/homePage">
+      <ListItemIcon>
+        <HomeIcon />
+      </ListItemIcon>
+      <ListItemText primary="Home Page" />
     </ListItemButton>
   </React.Fragment>
 );
