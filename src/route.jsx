@@ -10,8 +10,16 @@ import RequestedBooks from "./pages/UserPages/RequestedBooks";
 import PendingRequests from "./pages/AdminPages/PendingRequests";
 import GivenBooks from "./pages/AdminPages/GivenBooks";
 import BorrowedBooks from "./pages/UserPages/BorrowedBooks";
+import useDashboardStore from "./store/useDashBoardStore";
+import { ClientEnum } from "./ClientEnum";
+import ErrorPage from "./pages/DefaultPages/ErrorPage";
 
 const AppRoutes = () => {
+  const currentUserRoleFromStore = useDashboardStore(
+    (state) => state.currentRole
+  );
+
+  // Function to check if the user is an admin
   return (
     <Routes>
       <Route
@@ -30,14 +38,26 @@ const AppRoutes = () => {
           </PageLayout>
         }
       />
-      <Route
-        path="/requestedbooks"
-        element={
-          <PageLayout>
-            <RequestedBooks />
-          </PageLayout>
-        }
-      />
+      {currentUserRoleFromStore === ClientEnum.ADMIN_TYPE && (
+        <>
+          <Route
+            path="/requestedbooks"
+            element={
+              <PageLayout>
+                <RequestedBooks />
+              </PageLayout>
+            }
+          />
+          <Route
+            path="/borrowbooks"
+            element={
+              <PageLayout>
+                <BorrowedBooks />
+              </PageLayout>
+            }
+          />
+        </>
+      )}
 
       <Route
         path="/login"
@@ -63,40 +83,43 @@ const AppRoutes = () => {
           </PageLayout>
         }
       />
-      <Route
-        path="/pendingrequests"
-        element={
-          <PageLayout>
-            <PendingRequests />
-          </PageLayout>
-        }
-      />
+      {currentUserRoleFromStore === ClientEnum.ADMIN_TYPE && (
+        <>
+          <Route
+            path="/pendingrequests"
+            element={
+              <PageLayout>
+                <PendingRequests />
+              </PageLayout>
+            }
+          />
 
+          <Route
+            path="/givenbooks"
+            element={
+              <PageLayout>
+                <GivenBooks />
+              </PageLayout>
+            }
+          />
+          <Route
+            path="/bookeditor"
+            element={
+              <PageLayout>
+                <BookEditor />
+              </PageLayout>
+            }
+          />
+        </>
+      )}
       <Route
-        path="/borrowbooks"
+        path="*"
         element={
-          <PageLayout>
-            <BorrowedBooks />
+          <PageLayout showBar={false}>
+            <ErrorPage />
           </PageLayout>
         }
       />
-      <Route
-        path="/givenbooks"
-        element={
-          <PageLayout>
-            <GivenBooks />
-          </PageLayout>
-        }
-      />
-      <Route
-        path="/bookeditor"
-        element={
-          <PageLayout>
-            <BookEditor />
-          </PageLayout>
-        }
-      />
-      <Route path="*" element={<Navigate replace to="/404" />} />
     </Routes>
   );
 };
