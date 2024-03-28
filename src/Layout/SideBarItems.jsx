@@ -37,6 +37,12 @@ export const userItemList = (
 
 export const adminItemList = (
   <React.Fragment>
+    <ListItemButton component={Link} to="/homePage">
+      <ListItemIcon>
+        <HomeIcon />
+      </ListItemIcon>
+      <ListItemText primary="Home Page" />
+    </ListItemButton>
     <ListItemButton component={Link} to="/bookeditor">
       <ListItemIcon>
         <BorderColorIcon />
