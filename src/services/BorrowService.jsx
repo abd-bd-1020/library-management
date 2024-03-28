@@ -51,7 +51,7 @@ export default class BorrowService {
     return DefaultService.instance.defaultResponse();
   }
 
-  async getBorrowedBookRequest(payload) {
+  async getBorrowedBookRequestOfSingleUser(payload) {
     let retry = 0;
     while (retry++ < 2) {
       try {
@@ -293,6 +293,72 @@ export default class BorrowService {
     }
     return DefaultService.instance.defaultResponse();
   }
+  
+
+  async getBorrowedBookOfSingleUser(payload) {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+        const allBooksJSON = localStorage.getItem("bookData");
+        const allBooks = JSON.parse(allBooksJSON);
+        const allRequestedBooksJSON = localStorage.getItem("borrowData");
+        const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
+        const borrowedBooksOfSpecificPerson = [];
+        allRequestedBooks.forEach((requestedBook) => {
+          if (
+            requestedBook.userEmail === payload.email &&
+            requestedBook.isBorrowed == true
+          ) {
+            const bookId = requestedBook.bookId;
+            const existingBook = allBooks.find((book) => book._id === bookId);
+
+            if (existingBook) {
+              const listItem = {
+                "bookTitle" : existingBook.title,
+                "id" : requestedBook.borrowId,
+                "amount" : requestedBook.amount,
+              }
+
+              borrowedBooksOfSpecificPerson.push(listItem)
+            }
+          }
+        });
+
+        return {
+          status: true,
+          data: borrowedBooksOfSpecificPerson,
+        };
+      } catch (error) {
+        console.log(error);
+        retry++;
+      }
+    }
+    return DefaultService.instance.defaultResponse();
+  }
+
+  
+  async giveBackSingleBook(payload) {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+
+        const allRequestedBooksJSON = localStorage.getItem("borrowData");
+        const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
+        const updatedBorrowedBooks = allRequestedBooks.filter(requestedBook => requestedBook.borrowId !== payload.id);
+        localStorage.setItem("borrowData", JSON.stringify(updatedBorrowedBooks));
+
+        return {
+          status: true,
+          data: updatedBorrowedBooks,
+        };
+      } catch (error) {
+        console.log(error);
+        retry++;
+      }
+    }
+    return DefaultService.instance.defaultResponse();
+  }
+
   
 
 

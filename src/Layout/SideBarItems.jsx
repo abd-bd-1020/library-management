@@ -43,6 +43,13 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Given Books" />
     </ListItemButton>
+    <ListItemButton component={Link} to="/borrowbooks">
+      <ListItemIcon>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="Borrowed Books" />
+    </ListItemButton>
+    
   </React.Fragment>
 );
 

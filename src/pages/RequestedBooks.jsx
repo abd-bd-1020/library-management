@@ -29,10 +29,7 @@ function RequestedBooks() {
   const [searchByAuthor, setSearchByAuthor] = useState("");
   const [selectedGenre, setSelectedGenre] = useState(ClientEnum.ALL_GENRE);
   const [sortByRating, setSortByRating] = useState("");
-  const [currentUserRole, setCurrentUserRole] = useState("");
-  const navigate = useNavigate();
-  const addToCart = useCartStore((state) => state.addToCart);
-  const bookNotify = () => toast("book is added to the cart");
+
   const setDashboardText = useDashboardStore((state) => state.setDashboardText);
 
   
@@ -42,10 +39,9 @@ function RequestedBooks() {
     setDashboardText("Requested Books")
 
     const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
-    setCurrentUserRole(currentUserData?.role);
     async function fetchData() {
       try {
-        const response = await BorrowService.instance.getBorrowedBookRequest({"email" : currentUserData.email});
+        const response = await BorrowService.instance.getBorrowedBookRequestOfSingleUser({"email" : currentUserData.email});
         setBooksData(response.data);
       } catch (error) {
         console.error("Error fetching books:", error);

@@ -13,6 +13,7 @@ import PageLayout from "./Layout/PageLayout";
 import RequestedBooks from "./pages/RequestedBooks";
 import PendingRequests from "./pages/PendingRequests";
 import GivenBooks from "./pages/GivenBooks";
+import BorrowedBooks from "./pages/BorrowedBooks";
 
 const AppRoutes = () => {
   return (
@@ -41,7 +42,7 @@ const AppRoutes = () => {
           </PageLayout>
         }
       />
-      
+
       <Route
         path="/login"
         element={
@@ -74,7 +75,16 @@ const AppRoutes = () => {
           </PageLayout>
         }
       />
-         <Route
+
+      <Route
+        path="/borrowbooks"
+        element={
+          <PageLayout>
+            <BorrowedBooks />
+          </PageLayout>
+        }
+      />
+      <Route
         path="/givenbooks"
         element={
           <PageLayout>
