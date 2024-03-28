@@ -6,7 +6,13 @@ import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { mainListItems, secondaryListItems } from "./SideBarItems";
+import {
+  adminItemList,
+  userItemList,
+  secondaryListItems,
+} from "./SideBarItems";
+import useDashboardStore from "../store/useDashBoardStore";
+import { ClientEnum } from "../ClientEnum";
 
 const drawerWidth = 240;
 
@@ -37,6 +43,9 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const Sidebar = ({ open, toggleDrawer }) => {
+  const currentUserRoleFromStore = useDashboardStore(
+    (state) => state.currentRole
+  );
   return (
     <Drawer variant="permanent" open={open}>
       <Toolbar
@@ -52,11 +61,19 @@ const Sidebar = ({ open, toggleDrawer }) => {
         </IconButton>
       </Toolbar>
       <Divider />
-      <List component="nav">
-        {mainListItems}
-        <Divider sx={{ my: 1 }} />
-        {secondaryListItems}
-      </List>
+      {currentUserRoleFromStore === ClientEnum.ADMIN_TYPE ? (
+        <List component="nav">
+          {adminItemList}
+          <Divider sx={{ my: 1 }} />
+          {secondaryListItems}
+        </List>
+      ) : (
+        <List component="nav">
+          {userItemList}
+          <Divider sx={{ my: 1 }} />
+          {secondaryListItems}
+        </List>
+      )}
     </Drawer>
   );
 };

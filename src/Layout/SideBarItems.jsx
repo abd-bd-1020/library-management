@@ -10,45 +10,61 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Link } from "react-router-dom";
+import HomeIcon from "@mui/icons-material/Home";
+import AssignmentReturnIcon from "@mui/icons-material/AssignmentReturn";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import ForwardIcon from "@mui/icons-material/Forward";
 
-export const mainListItems = (
+export const userItemList = (
   <React.Fragment>
     <ListItemButton component={Link} to="/homePage">
       <ListItemIcon>
-        <DashboardIcon />
+        <HomeIcon />
       </ListItemIcon>
       <ListItemText primary="Home Page" />
     </ListItemButton>
-    <ListItemButton component={Link} to="/pendingrequests">
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Pending Requests" />
-    </ListItemButton>
-    <ListItemButton component={Link} to="/bookeditor">
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Book Editor" />
-    </ListItemButton>
-    <ListItemButton component={Link} to="/givenbooks">
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Given Books" />
-    </ListItemButton>
     <ListItemButton component={Link} to="/requestedbooks">
       <ListItemIcon>
-        <BarChartIcon />
+        <AssignmentReturnIcon />
       </ListItemIcon>
       <ListItemText primary="Requested Books" />
     </ListItemButton>
-
     <ListItemButton component={Link} to="/borrowbooks">
       <ListItemIcon>
-        <LayersIcon />
+        <AssignmentTurnedInIcon />
       </ListItemIcon>
       <ListItemText primary="Borrowed Books" />
+    </ListItemButton>
+  </React.Fragment>
+);
+
+export const adminItemList = (
+  <React.Fragment>
+    <ListItemButton component={Link} to="/homePage">
+      <ListItemIcon>
+        <HomeIcon />
+      </ListItemIcon>
+      <ListItemText primary="Home Page" />
+    </ListItemButton>
+    <ListItemButton component={Link} to="/bookeditor">
+      <ListItemIcon>
+        <BorderColorIcon />
+      </ListItemIcon>
+      <ListItemText primary="Book Editor" />
+    </ListItemButton>
+    <ListItemButton component={Link} to="/pendingrequests">
+      <ListItemIcon>
+        <PendingActionsIcon />
+      </ListItemIcon>
+      <ListItemText primary="Pending Requests" />
+    </ListItemButton>
+    <ListItemButton component={Link} to="/givenbooks">
+      <ListItemIcon>
+        <ForwardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Given Books" />
     </ListItemButton>
   </React.Fragment>
 );

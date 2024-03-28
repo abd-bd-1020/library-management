@@ -188,7 +188,6 @@ export default class BorrowService {
             return requestedBook;
           }
         });
-        console.log(updatedBorrowedBooks);
         localStorage.setItem(
           "borrowData",
           JSON.stringify(updatedBorrowedBooks)
