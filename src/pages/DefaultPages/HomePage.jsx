@@ -5,9 +5,7 @@ import {
   Container,
   Grid,
   Paper,
-  TextField,
-  MenuItem,
-  Box,
+
 } from "@mui/material";
 import { ClientEnum } from "../../ClientEnum";
 import BookService from "../../services/BookService";
@@ -35,12 +33,13 @@ function HomePage() {
   const addToCart = useCartStore((state) => state.addToCart);
   const bookNotify = () => toast("book is added to the cart");
   const setDashboardText = useDashboardStore((state) => state.setDashboardText);
+  const setDashboardColor = useDashboardStore((state) => state.setDashboardColor);
+  const setCurrentRoleFromStore = useDashboardStore((state) => state.setCurrentRole);
+
+
   
   useEffect(() => {
-    setDashboardText("All Books")
 
-    const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
-    setCurrentUserRole(currentUserData?.role);
     async function fetchData() {
       try {
         const response = await BookService.instance.getAllbooks();
@@ -54,6 +53,31 @@ function HomePage() {
 
   
   }, []);
+
+  useEffect(() => {
+
+
+    setDashboardText("All Books")
+
+    const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
+    setCurrentUserRole(currentUserData?.role);
+    if(currentUserRole){
+      setCurrentRoleFromStore(currentUserRole)
+    }
+    if(currentUserRole == ClientEnum.ADMIN_TYPE){
+      setDashboardColor("#0a335b")
+    }
+    else if(currentUserRole == ClientEnum.USER_TYPE){
+      setDashboardColor("#1976d2")
+    }
+    else {
+      setDashboardColor("#1976d2")
+    }
+    
+
+
+  
+  }, [currentUserRole]);
 
   const handleOpenModal = (book) => {
     setSelectedBook(book);

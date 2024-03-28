@@ -12,12 +12,13 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Link } from "react-router-dom";
 
 export const mainListItems = (
+  
   <React.Fragment>
     <ListItemButton component={Link} to="/homePage">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="Home Page" />
     </ListItemButton>
     <ListItemButton component={Link} to="/pendingrequests">
       <ListItemIcon>
@@ -31,18 +32,19 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Book Editor" />
     </ListItemButton>
-    <ListItemButton component={Link} to="/requestedbooks">
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Requested Books" />
-    </ListItemButton >
     <ListItemButton component={Link} to="/givenbooks">
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
       <ListItemText primary="Given Books" />
     </ListItemButton>
+    <ListItemButton component={Link} to="/requestedbooks">
+      <ListItemIcon>
+        <BarChartIcon />
+      </ListItemIcon>
+      <ListItemText primary="Requested Books" />
+    </ListItemButton >
+    
     <ListItemButton component={Link} to="/borrowbooks">
       <ListItemIcon>
         <LayersIcon />

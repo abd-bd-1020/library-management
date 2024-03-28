@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import useCartStore from "../store/useCartStore";
 import CartIconButton from "../components/Cart/CartIconButton";
 import useDashboardStore from "../store/useDashBoardStore";
+import { ClientEnum } from "../ClientEnum";
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -37,6 +38,9 @@ const TopBar = ({ open, toggleDrawer }) => {
   const toggleCart = useCartStore((state) => state.toggleCart);
   const [currentUserData, setCurrentUserData] = useState(null);
   const dashboardText = useDashboardStore((state) => state.dashboardText);
+  const dashboardColor = useDashboardStore((state) => state.dashboardColor);
+  const currentUserRoleFromStore = useDashboardStore((state) => state.currentRole);
+
 
 
 
@@ -52,7 +56,7 @@ const TopBar = ({ open, toggleDrawer }) => {
     setCurrentUserData(null);
   };
   return (
-    <AppBar className="page-header" position="absolute" open={open}>
+    <AppBar style={{backgroundColor : dashboardColor}} className="page-header" position="absolute" open={open}> 
       <Toolbar
         sx={{
           pr: "24px",
@@ -79,8 +83,9 @@ const TopBar = ({ open, toggleDrawer }) => {
         >
           {dashboardText}
         </Typography>
+        {currentUserRoleFromStore===ClientEnum.USER_TYPE&&
         <CartIconButton  toggleCart={toggleCart}>
-        </CartIconButton>
+        </CartIconButton>}
         {currentUserData !== null ? (
           <IconButton color="inherit" onClick={handleLogout}>
             <LogoutIcon />
