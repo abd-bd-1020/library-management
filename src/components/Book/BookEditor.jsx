@@ -62,7 +62,7 @@ const BookEditor = () => {
         });
       }
     } else {
-      const response = await BookService.instance.addBook(payload);
+      const response = await BookService.instance.createBook(payload);
       if (response.status === true) {
         Swal.fire({
           title: "Success",
