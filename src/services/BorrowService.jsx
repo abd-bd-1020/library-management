@@ -102,6 +102,48 @@ export default class BorrowService {
     }
     return DefaultService.instance.defaultResponse();
   }
+  
+
+  async getAllAcceptedRequests() {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+        const allBooksJSON = localStorage.getItem("bookData");
+        const allBooks = JSON.parse(allBooksJSON);
+        const allRequestedBooksJSON = localStorage.getItem("borrowData");
+        const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
+        const allUserDataJSON = localStorage.getItem("userData");
+        const allUserData = JSON.parse(allUserDataJSON);
+
+        const allRequestedBooksWithData = [];
+        allRequestedBooks.forEach((requestedBook) => {
+          if(!requestedBook.isBorrowed)return
+          const book = allBooks.find(
+            (book) => book._id === requestedBook.bookId
+          );
+          const user = allUserData.find(
+            (user) => user.email === requestedBook.userEmail
+          );
+          allRequestedBooksWithData.push({
+            id: requestedBook.borrowId,
+            book: book,
+            user: user,
+            amount: requestedBook.amount,
+            requestTime: requestedBook.requestTime,
+          });
+        });
+
+        return {
+          status: true,
+          data: allRequestedBooksWithData,
+        };
+      } catch (error) {
+        console.log(error);
+        retry++;
+      }
+    }
+    return DefaultService.instance.defaultResponse();
+  }
 
   async getAllBorrowRequests() {
     let retry = 0;

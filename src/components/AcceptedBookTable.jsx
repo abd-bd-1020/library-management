@@ -21,48 +21,28 @@ const StyledText = {
   textAlign: "left",
 };
 
-function RequestedBookTable({ booksData, handleAccept, handleReject,checkedList,setCheckedList }) {
+function AcceptedBookTable({ booksData }) {
 
 
-
-  const handleCheckBoxClick = (id, e) => {
-    if (e.target.checked) {
-      setCheckedList([...checkedList, id])
-    }
-    else {
-      setCheckedList(checkedList.filter(borrowedBookId => borrowedBookId !== id))
-    }
-  }
-  if (!booksData) {
-    return null;
-  }
   return (
     <TableContainer component={Paper}>
             <Typography variant="h5" component="div" style={{ margin: '16px' }}>
-        Book Requests
+        Accepted Book Requests
       </Typography>
       <Table aria-label="requested books table">
 
         <TableHead>
           <TableRow style={{ alignContent: "left" }}>
-            <TableCell >Checkbox</TableCell>
             <TableCell >Book Title</TableCell>
             <TableCell >Requester Name</TableCell>
             <TableCell >Book Amount</TableCell>
-            <TableCell >Accept</TableCell>
-            <TableCell >Reject</TableCell>
-
           </TableRow>
         </TableHead>
         <TableBody>
           {booksData.map((requestedBookData) => (
             <TableRow key={requestedBookData.id}>
 
-              <TableCell align="center">
-                <Checkbox 
-                  checked={checkedList.includes(requestedBookData.id)}
-                  onClick={(e) => { handleCheckBoxClick(requestedBookData.id, e) }} />
-              </TableCell>
+    
               <TableCell align="center">
                 <Typography sx={{ ...StyledText, fontWeight: 700 }}>
                   {requestedBookData.book.title}
@@ -78,18 +58,6 @@ function RequestedBookTable({ booksData, handleAccept, handleReject,checkedList,
                   {requestedBookData.amount}
                 </Typography>
               </TableCell>
-              <TableCell align="left">
-                <Button variant="contained" color="primary" onClick={() => { handleAccept(requestedBookData) }}>
-                  Accept
-                </Button>
-
-              </TableCell>
-              <TableCell align="left">
-                <Button variant="contained" color="error" onClick={() => { handleReject(requestedBookData) }}>
-                  Reject
-                </Button>
-
-              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -98,4 +66,4 @@ function RequestedBookTable({ booksData, handleAccept, handleReject,checkedList,
   );
 }
 
-export default RequestedBookTable;
+export default AcceptedBookTable;

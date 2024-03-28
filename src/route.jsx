@@ -12,6 +12,7 @@ import BookEditor from "./components/BookEditor";
 import PageLayout from "./Layout/PageLayout";
 import RequestedBooks from "./pages/RequestedBooks";
 import PendingRequests from "./pages/PendingRequests";
+import GivenBooks from "./pages/GivenBooks";
 
 const AppRoutes = () => {
   return (
@@ -70,6 +71,14 @@ const AppRoutes = () => {
         element={
           <PageLayout>
             <PendingRequests />
+          </PageLayout>
+        }
+      />
+         <Route
+        path="/givenbooks"
+        element={
+          <PageLayout>
+            <GivenBooks />
           </PageLayout>
         }
       />

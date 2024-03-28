@@ -51,6 +51,16 @@ function PendingRequests() {
 
     fetchData();
   }, [isReload]);
+  useEffect(() => {
+    if (isMarkAll) {
+      const allIds = booksData.map((borrowedBook) => borrowedBook.id);
+      setCheckedList(allIds)
+
+    }
+    else {
+      setCheckedList(checkedList.filter(borrowedBookId => !booksData.some(bookData => bookData.id === borrowedBookId)));
+    }
+  }, [isMarkButtonClicked]);
 
 
   useEffect(() => {
@@ -156,7 +166,7 @@ function PendingRequests() {
               p: 2,
               display: "flex",
               flexDirection: "colum",
-              height: "calc(100vh - 280px)",
+              height: "calc(100vh - 240px)",
               overflow: "auto",
               flexWrap: "wrap",
             }}
@@ -167,8 +177,7 @@ function PendingRequests() {
                         handleAccept={handleAccept}
                         handleReject = {handleReject}
                         booksData={filteredBooksData}
-                        isMarkButtonClicked = {isMarkButtonClicked}
-                        isMarkAll = {isMarkAll}
+
                         checkedList = {checkedList}
                         setCheckedList = {setCheckedList}
                       />

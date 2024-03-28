@@ -36,12 +36,12 @@ export const mainListItems = (
         <BarChartIcon />
       </ListItemIcon>
       <ListItemText primary="Requested Books" />
-    </ListItemButton>
-    <ListItemButton>
+    </ListItemButton >
+    <ListItemButton component={Link} to="/givenbooks">
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="Given Books" />
     </ListItemButton>
   </React.Fragment>
 );
