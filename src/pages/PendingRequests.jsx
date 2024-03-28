@@ -8,6 +8,7 @@ import {
   TextField,
   MenuItem,
   Box,
+  Button,
 } from "@mui/material";
 import { ClientEnum } from "../ClientEnum";
 import Swal from "sweetalert2";
@@ -18,53 +19,138 @@ import "react-toastify/dist/ReactToastify.css";
 import BooksFilter from "../components/BooksFilter";
 import useDashboardStore from "../store/useDashBoardStore";
 import BorrowService from "../services/BorrowService";
-import RequestedBook from "../components/RequestedBook";
+import RequestedBook from "../components/RequestedBookTable";
+import RequestedBookTable from "../components/RequestedBookTable";
 
 function PendingRequests() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedBook, setSelectedBook] = useState(null);
+  const [filteredBooksData, setFilteredBooksData] = useState([]);
   const [booksData, setBooksData] = useState([]);
   const [searchByName, setSearchByName] = useState("");
-  const [searchByAuthor, setSearchByAuthor] = useState("");
-  const [selectedGenre, setSelectedGenre] = useState(ClientEnum.ALL_GENRE);
-  const [sortByRating, setSortByRating] = useState("");
-  const [currentUserRole, setCurrentUserRole] = useState("");
-  const navigate = useNavigate();
-  const addToCart = useCartStore((state) => state.addToCart);
-  const bookNotify = () => toast("book is added to the cart");
+  const acceptNotify = () => toast("Request Accepted");
+  const rejectNotify = () => toast("Request Rejected");
+  const errorNotify = () => toast("Failed to do the action");
   const setDashboardText = useDashboardStore((state) => state.setDashboardText);
+  const [isReload,setIsReload] = useState(true)
+  const [isMarkAll,setIsMarkAll] = useState(false)
+  const [isMarkButtonClicked,setIsMarkButtonClicked] = useState(false)
+  const [checkedList, setCheckedList] = useState([])
+
 
   useEffect(() => {
     setDashboardText("Pending Requests");
 
-    const currentUserData = JSON.parse(localStorage.getItem("currentUserData"));
-    setCurrentUserRole(currentUserData?.role);
     async function fetchData() {
       try {
         const response = await BorrowService.instance.getAllBorrowRequests();
         setBooksData(response.data);
+        setFilteredBooksData(response.data); 
       } catch (error) {
         console.error("Error fetching books:", error);
       }
     }
 
     fetchData();
-  }, []);
+  }, [isReload]);
 
+
+  useEffect(() => {
+    const filteredData = booksData.filter((book) =>
+      book.user.email.toLowerCase().includes(searchByName.toLowerCase())
+    );
+    setCheckedList(checkedList.filter(borrowedBookId => filteredData.some(bookData => bookData.id === borrowedBookId)));
+
+    setFilteredBooksData(filteredData);
+  }, [searchByName, booksData]);
+
+  const handleAccept = async (bookRequest) =>{
+
+    const response = await BorrowService.instance.acceptSingleRequest({"id":bookRequest.id});
+    if(response.status){
+      setIsReload(!isReload)
+      acceptNotify()
+    }
+    else{
+      errorNotify()
+    }
+
+  }
+  const handleReject = async (bookRequest) =>{
+
+    const response = await BorrowService.instance.rejectSingleRequest({"id":bookRequest.id});
+    if(response.status){
+      setIsReload(!isReload)
+      rejectNotify()
+    }
+    else{
+      errorNotify()
+    }
+  }
+
+
+  const handleMarkAll = () => {
+    setIsMarkAll(true);
+    setIsMarkButtonClicked(!isMarkButtonClicked)
+
+  };
+
+  const handleUnmarkAll = () => {
+    setIsMarkAll(false);
+    setIsMarkButtonClicked(!isMarkButtonClicked)
+  };
+
+  const handleAcceptMarked = async () => {
+    const response = await BorrowService.instance.acceptMarkedRequest({"data" : checkedList });
+    if(response.status){
+      setIsReload(!isReload)
+      rejectNotify()
+    }
+    else{
+      errorNotify()
+    }
+
+  };
+
+  const handleRejectMarked = async () => {
+    const response = await BorrowService.instance.rejectMarkedRequest({"data" : checkedList });
+    if(response.status){
+      setIsReload(!isReload)
+      rejectNotify()
+    }
+    else{
+      errorNotify()
+    }
+  };
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Grid container spacing={3}>
-        <BooksFilter
-          searchByName={searchByName}
-          setSearchByName={setSearchByName}
-          searchByAuthor={searchByAuthor}
-          setSearchByAuthor={setSearchByAuthor}
-          selectedGenre={selectedGenre}
-          setSelectedGenre={setSelectedGenre}
-          sortByRating={sortByRating}
-          setSortByRating={setSortByRating}
-        />
-        <Grid item xs={12}>
+      <Grid item xs={12}>
+          <Paper   sx={{ p: 2 , mt : 10}}>
+            <Box  display="flex" alignItems="center"  >
+              <TextField
+               sx={{width:"100%"}}
+                label="Search by Requester Name"
+                variant="outlined"
+                size="small"
+                value={searchByName}
+                onChange={(e) => setSearchByName(e.target.value)}
+              />
+       
+              <Button variant="contained" onClick={handleMarkAll} sx={{ ml: 2,width:"50%" }}>
+                Mark All
+              </Button>
+              <Button variant="contained" onClick={handleUnmarkAll} sx={{ ml: 2,width:"50%" }}>
+                Unmark All
+              </Button>
+              <Button variant="contained" onClick={handleAcceptMarked} sx={{ ml: 2,width:"50%" }}>
+                Accept Marked
+              </Button>
+              <Button variant="contained" onClick={handleRejectMarked} sx={{ ml: 2,width:"50%" }}>
+                Reject Marked
+              </Button>
+            </Box>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} style={{marginTop : "20px"}}>
           <Paper
             sx={{
               p: 2,
@@ -76,25 +162,18 @@ function PendingRequests() {
             }}
           >
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-              <Grid container spacing={3}>
                 <>
-                  {booksData.map((requestedBookData) => (
-                    <Grid item xs={10} md={6} lg={4} key={requestedBookData.id}>
-                      <RequestedBook
-                        key={requestedBookData.book._id}
-                        requestedBookData={requestedBookData}
+                      <RequestedBookTable
+                        handleAccept={handleAccept}
+                        handleReject = {handleReject}
+                        booksData={filteredBooksData}
+                        isMarkButtonClicked = {isMarkButtonClicked}
+                        isMarkAll = {isMarkAll}
+                        checkedList = {checkedList}
+                        setCheckedList = {setCheckedList}
                       />
-                    </Grid>
-                  ))}
-                  {selectedBook && (
-                    <BookDetailsModal
-                      open={isModalOpen}
-                      onClose={handleCloseModal}
-                      book={selectedBook}
-                    />
-                  )}
+                
                 </>
-              </Grid>
             </Container>
           </Paper>
         </Grid>

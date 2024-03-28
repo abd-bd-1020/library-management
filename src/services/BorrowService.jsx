@@ -116,6 +116,7 @@ export default class BorrowService {
 
         const allRequestedBooksWithData = [];
         allRequestedBooks.forEach((requestedBook) => {
+          if(requestedBook.isBorrowed)return
           const book = allBooks.find(
             (book) => book._id === requestedBook.bookId
           );
@@ -142,4 +143,117 @@ export default class BorrowService {
     }
     return DefaultService.instance.defaultResponse();
   }
+
+  async acceptSingleRequest(payload) {
+    
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+
+        const allRequestedBooksJSON = localStorage.getItem("borrowData");
+        const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
+
+
+
+        const updatedBorrowedBooks = allRequestedBooks.map(requestedBook => {
+          if (requestedBook.borrowId === payload.id) {
+            return { ...requestedBook, isBorrowed: true };
+          } else {
+            return requestedBook;
+          }
+        });
+        console.log(updatedBorrowedBooks)
+        localStorage.setItem("borrowData", JSON.stringify(updatedBorrowedBooks));
+
+        return {
+          status: true,
+          data: updatedBorrowedBooks,
+        };
+      } catch (error) {
+        console.log(error);
+        retry++;
+      }
+    }
+    return DefaultService.instance.defaultResponse();
+  }
+
+  async rejectSingleRequest(payload) {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+
+        const allRequestedBooksJSON = localStorage.getItem("borrowData");
+        const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
+        const updatedBorrowedBooks = allRequestedBooks.filter(requestedBook => requestedBook.borrowId !== payload.id);
+        localStorage.setItem("borrowData", JSON.stringify(updatedBorrowedBooks));
+
+        return {
+          status: true,
+          data: updatedBorrowedBooks,
+        };
+      } catch (error) {
+        console.log(error);
+        retry++;
+      }
+    }
+    return DefaultService.instance.defaultResponse();
+  }
+
+  async acceptMarkedRequest(payload) {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+        const allRequestedBooksJSON = localStorage.getItem("borrowData");
+        const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
+  
+        payload.data.forEach((id) => {
+          allRequestedBooks.forEach((requestedBook) => {
+            if (requestedBook.borrowId === id) {
+              requestedBook.isBorrowed = true;
+            }
+          });
+        });
+  
+        localStorage.setItem("borrowData", JSON.stringify(allRequestedBooks));
+  
+        return {
+          status: true,
+          data: allRequestedBooks,
+        };
+      } catch (error) {
+        console.log(error);
+        retry++;
+      }
+    }
+    return DefaultService.instance.defaultResponse();
+  }
+  
+
+  async rejectMarkedRequest(payload) {
+    let retry = 0;
+    while (retry++ < 2) {
+      try {
+        const allRequestedBooksJSON = localStorage.getItem("borrowData");
+        const allRequestedBooks = JSON.parse(allRequestedBooksJSON);
+  
+        const updatedBorrowedBooks = allRequestedBooks.filter(requestedBook => !payload.data.includes(requestedBook.borrowId));
+  
+        localStorage.setItem("borrowData", JSON.stringify(updatedBorrowedBooks));
+  
+        return {
+          status: true,
+          data: updatedBorrowedBooks,
+        };
+      } catch (error) {
+        console.log(error);
+        retry++;
+      }
+    }
+    return DefaultService.instance.defaultResponse();
+  }
+  
+
+
+  
+
 }
