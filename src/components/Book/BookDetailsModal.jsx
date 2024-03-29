@@ -4,7 +4,7 @@ import Carousel from "react-material-ui-carousel";
 
 function Item({ bookUrl }) {
   console.log(bookUrl);
-  return <img src={bookUrl} style={{ width: "100%", height: "100%" }} />;
+  return <img src={bookUrl} style={{ width: "100%", height: "60vh" }} />;
 }
 
 const fakeArray = [
