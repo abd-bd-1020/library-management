@@ -2,14 +2,16 @@ import React from "react";
 import { Modal, Box, Typography, Button, Grid, CardMedia } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 
-function Item({ item }) {
-  console.log(item);
-  return (
-    <img src={item.thumbnailUrl} style={{ width: "100%", height: "100%" }} />
-  );
+function Item({ bookUrl }) {
+  console.log(bookUrl);
+  return <img src={bookUrl} style={{ width: "100%", height: "100%" }} />;
 }
 
-const fakeArray = [1, 2, 3];
+const fakeArray = [
+  "https://i.ibb.co/KLRKdbR/ec1.png",
+  "https://i.ibb.co/DGGSqXL/ec2.png",
+  "https://i.ibb.co/HT33G93/ec3.png",
+];
 function BookDetailsModal({ open, onClose, book }) {
   const [index, setIndex] = React.useState(0);
   const style = {
@@ -24,21 +26,6 @@ function BookDetailsModal({ open, onClose, book }) {
     boxShadow: 24,
     p: 4,
   };
-
-  var items = [
-    {
-      name: "Random Name #1",
-      description: "1 - Probably the most random thing you have ever seen!",
-    },
-    {
-      name: "Random Name #2",
-      description: "2- Hello World!",
-    },
-    {
-      name: "Random Name #3",
-      description: "3 - Hello World!",
-    },
-  ];
 
   const handleChange = (cur, prev) => {
     setIndex(cur);
@@ -65,20 +52,25 @@ function BookDetailsModal({ open, onClose, book }) {
               swipe
               className="my-carousel"
             >
-              {/* {items.map((item, i) => (
-                <Item key={i} item={item} />
-              ))} */}
-              {fakeArray.map((_, i) => (
-                <Item key={i} item={book} />
+              {fakeArray.map((bookUrl, i) => (
+                <Item key={i} bookUrl={bookUrl} />
               ))}
             </Carousel>
             {fakeArray.map((_, i) => (
               <button
+                key={i}
                 onClick={() => setIndex(i)}
-                style={{ background: i === index ? "#ccc" : "#fff" }}
-              >
-                {i}
-              </button>
+                style={{
+                  width: "30%",
+                  background: i === index ? "#5755FE" : "#8B93FF",
+                  height: "10px",
+                  padding: "unset",
+                  borderRadius: "unset",
+                  margin: "2px",
+                  outline: "none",
+                  border: "none",
+                }}
+              ></button>
             ))}
           </div>
         </Grid>
