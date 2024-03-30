@@ -3,7 +3,6 @@ import { Modal, Box, Typography, Button, Grid, CardMedia } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
 
 function Item({ bookUrl }) {
-  console.log(bookUrl);
   return <img src={bookUrl} style={{ width: "100%", height: "60vh" }} />;
 }
 
@@ -14,22 +13,9 @@ const fakeArray = [
 ];
 function BookDetailsModal({ open, onClose, book }) {
   const [index, setIndex] = React.useState(0);
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "auto",
-    maxWidth: "90vw",
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
 
   const handleChange = (cur, prev) => {
     setIndex(cur);
-    console.log(cur, prev);
   };
 
   return (
@@ -39,7 +25,7 @@ function BookDetailsModal({ open, onClose, book }) {
       aria-labelledby="book-details-title"
       aria-describedby="book-details-description"
     >
-      <Grid sx={style} container spacing={2}>
+      <Grid container spacing={2} className="details-popin">
         <Grid item xs={12} lg={6}>
           <div>
             <Carousel

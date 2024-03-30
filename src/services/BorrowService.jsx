@@ -20,7 +20,6 @@ export default class BorrowService {
   }
 
   async requestBorrowBooks(payload) {
-    console.log(payload);
     let retry = 0;
     while (retry++ < 2) {
       try {

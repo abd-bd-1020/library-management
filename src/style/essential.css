@@ -28,6 +28,19 @@
   }
 }
 
+.details-popin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: 90vw;
+  background-color: white;
+  border: 2px solid #000;
+  box-shadow: 24px;
+  padding: 20px;
+}
+
 @media (max-width: 768px) {
   .cart_drawer {
     width: 100vw;
@@ -35,5 +48,13 @@
 
   .page-header {
     margin-left: unset;
+  }
+
+  .details-popin {
+    width: 100vw;
+    min-width: 100vw;
+    height: 100vh;
+    margin: unset !important;
+    overflow: scroll;
   }
 }

@@ -1,15 +1,27 @@
 import { Box, CssBaseline, Toolbar } from "@mui/material";
 import TopBar from "./TopBar";
 import Sidebar from "./SideBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cart from "../components/Cart/Cart";
 
 function PageLayout({ showBar = true, children }) {
   const [open, setOpen] = useState(true);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>

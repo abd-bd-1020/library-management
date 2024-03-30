@@ -33,7 +33,6 @@ const LoginPage = () => {
         email: email,
         role: response.data.role,
       };
-      console.log(currentUserData);
       localStorage.setItem("currentUserData", JSON.stringify(currentUserData));
       window.location.href = "/homePage";
     } else {
