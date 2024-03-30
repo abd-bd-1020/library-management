@@ -65,25 +65,13 @@ const Sidebar = ({ open, toggleDrawer }) => {
       </Toolbar>
       <Divider />
       {currentUserRoleFromStore === ClientEnum.GUEST_TYPE && (
-        <List component="nav">
-          {commonItemList}
-          <Divider sx={{ my: 1 }} />
-          {secondaryListItems}
-        </List>
+        <List component="nav">{commonItemList}</List>
       )}
       {currentUserRoleFromStore === ClientEnum.ADMIN_TYPE && (
-        <List component="nav">
-          {adminItemList}
-          <Divider sx={{ my: 1 }} />
-          {secondaryListItems}
-        </List>
+        <List component="nav">{adminItemList}</List>
       )}
       {currentUserRoleFromStore === ClientEnum.USER_TYPE && (
-        <List component="nav">
-          {userItemList}
-          <Divider sx={{ my: 1 }} />
-          {secondaryListItems}
-        </List>
+        <List component="nav">{userItemList}</List>
       )}
     </Drawer>
   );
