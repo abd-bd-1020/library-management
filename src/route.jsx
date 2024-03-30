@@ -38,7 +38,7 @@ const AppRoutes = () => {
           </PageLayout>
         }
       />
-      {currentUserRoleFromStore === ClientEnum.ADMIN_TYPE && (
+      {currentUserRoleFromStore === ClientEnum.USER_TYPE && (
         <>
           <Route
             path="/requestedbooks"

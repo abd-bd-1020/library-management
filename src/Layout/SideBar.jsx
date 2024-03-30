@@ -14,6 +14,7 @@ import {
 } from "./SideBarItems";
 import useDashboardStore from "../store/useDashBoardStore";
 import { ClientEnum } from "../ClientEnum";
+import { Typography } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -57,6 +58,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
           px: [1],
         }}
       >
+        <Typography align="center">Library Management</Typography>
         <IconButton onClick={toggleDrawer}>
           <ChevronLeftIcon />
         </IconButton>
