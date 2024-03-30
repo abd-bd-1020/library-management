@@ -59,8 +59,8 @@ const Sidebar = ({ open, toggleDrawer }) => {
         }}
       >
         <Typography align="center">Library Management</Typography>
-        <IconButton onClick={toggleDrawer}>
-          <ChevronLeftIcon />
+        <IconButton className="sidebar-toggle-button" onClick={toggleDrawer}>
+          <ChevronLeftIcon className="sidebar-toggle-button" />
         </IconButton>
       </Toolbar>
       <Divider />

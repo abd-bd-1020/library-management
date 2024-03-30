@@ -56,6 +56,7 @@ const TopBar = ({ open, toggleDrawer }) => {
     setCurrentRoleFromStore(ClientEnum.GUEST_TYPE);
     localStorage.removeItem("currentUserData");
     setCurrentUserData(null);
+    navigate("/");
   };
   return (
     <AppBar
@@ -70,6 +71,7 @@ const TopBar = ({ open, toggleDrawer }) => {
         }}
       >
         <IconButton
+          className="sidebar-toggle-button"
           edge="start"
           color="inherit"
           aria-label="open drawer"

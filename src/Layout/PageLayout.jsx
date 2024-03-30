@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Cart from "../components/Cart/Cart";
 
 function PageLayout({ showBar = true, children }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const toggleDrawer = () => {
@@ -17,9 +17,13 @@ function PageLayout({ showBar = true, children }) {
       setWindowWidth(window.innerWidth);
     };
     window.addEventListener("resize", handleResize);
+    if (windowWidth < 768) {
+      setOpen(false);
+    }
 
     return () => {
       window.removeEventListener("resize", handleResize);
+      console.log("removed");
     };
   }, []);
 

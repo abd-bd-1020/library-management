@@ -57,4 +57,7 @@
     margin: unset !important;
     overflow: scroll;
   }
+  .sidebar-toggle-button {
+    display: none !important;
+  }
 }
